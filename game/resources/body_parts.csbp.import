@@ -1,0 +1,14 @@
+[remap]
+
+importer="coma.separated.body.parts"
+type="Resource"
+uid="uid://cb0f4kgpfdlny"
+path="res://.godot/imported/body_parts.csbp-8931d55c003f846304bb138f16d3eed2.res"
+
+[deps]
+
+source_file="res://game/resources/body_parts.csbp"
+dest_files=["res://.godot/imported/body_parts.csbp-8931d55c003f846304bb138f16d3eed2.res"]
+
+[params]
+

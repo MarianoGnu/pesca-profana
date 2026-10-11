@@ -15,7 +15,7 @@ func _get_property_list() -> Array[Dictionary]:
 	var properties: Array[Dictionary] = []
 	_ensure_sorted_initialized()
 	for type: BodyPart.Type in _sorted:
-		var type_name: String = BodyPart.Type.keys()[type].to_lower()
+		var type_name: String = BodyPart.Type.find_key(type).to_lower()
 		for part: BodyPart in _sorted[type]:
 			var property: Dictionary = {
 				name = type_name + "/" + part.id,

@@ -24,6 +24,10 @@ EventBus="*uid://by8po257gljkd"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/pesca_profana_data/plugin.cfg")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

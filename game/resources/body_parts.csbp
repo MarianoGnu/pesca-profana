@@ -1,0 +1,7 @@
+id,rareza,tipo,genero,variante,escena,sprite
+franken_head,0,Cabeza,Masculino,Humano,,
+franken_torso,0,Torso,Masculino,Humano,,
+franken_arm_r,0,Brazo Derecho,Masculino,Humano,,
+franken_arm_l,0,Brazo Izquierdo,Masculino,Humano,,
+franken_leg_r,0,Pierna Derecha,Masculino,Humano,,
+franken_leg_l,0,Pierna Izquierda,Masculino,Humano,,

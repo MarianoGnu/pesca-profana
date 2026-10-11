@@ -11,12 +11,14 @@ enum Type {
 	ARM_R,
 	LEG_L,
 	LEG_R,
+	UNDEFINED,
 }
 
 enum Gender {
 	ANY = -1,
 	FEMENINE,
 	MASCULINE,
+	UNDEFINED,
 }
 
 enum Variation {
@@ -24,13 +26,14 @@ enum Variation {
 	HUMAN,
 	VAMPIRE,
 	WEREWOLF,
+	UNDEFINED,
 }
 
 @export var id: StringName
 @export var rarity: int
-@export var type: Type
-@export var gender: Gender
-@export var variation: Variation
+@export var type := Type.UNDEFINED
+@export var gender := Gender.UNDEFINED
+@export var variation := Variation.UNDEFINED
 @export var scene: PackedScene
 @export var sprite: Texture2D
 
