@@ -14,6 +14,11 @@ config/name="Pesca Profana"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameState="*uid://17ahw7at5avg"
+EventBus="*uid://by8po257gljkd"
+
 [display]
 
 window/stretch/mode="canvas_items"
