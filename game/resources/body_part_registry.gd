@@ -1,4 +1,6 @@
 @tool
+## updated list of parts can be downloaded from 
+## https://docs.google.com/spreadsheets/d/1LvfvR6Xb7-vpI6kJMFmVmJL_-WpyoM2CPJHtwOOPosk/edit?usp=sharing
 class_name BodyPartRegistry
 extends Resource
 
@@ -13,7 +15,7 @@ func _get_property_list() -> Array[Dictionary]:
 	var properties: Array[Dictionary] = []
 	_ensure_sorted_initialized()
 	for type: BodyPart.Type in _sorted:
-		var type_name: String = BodyPart.Type.keys()[type]
+		var type_name: String = BodyPart.Type.keys()[type].to_lower()
 		for part: BodyPart in _sorted[type]:
 			var property: Dictionary = {
 				name = type_name + "/" + part.id,
