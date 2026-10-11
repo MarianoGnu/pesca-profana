@@ -133,5 +133,8 @@ class ComaSeparatedBodyPartsImporter extends EditorImportPlugin:
 	func _error(...args) -> void:
 		var err: String = "%s@L%d " % [_source_file, _line_n]
 		for arg: Variant in args:
-			err += String(arg)
+			if typeof(arg) == TYPE_ARRAY:
+				err += ", ".join(arg)
+			else:
+				err += str(arg)
 		push_error(err)
