@@ -52,3 +52,23 @@ func instantiate() -> BodyPart2D:
 		instance.queue_free()
 		push_error("Asociated scene is not a BodyPart2D. returning null.")
 		return null
+
+func _to_string() -> String:
+	const TYPES = {
+		Type.HEAD : "👩🏻‍🦲",
+		Type.TORSO : "🎽",
+		Type.ARM_L : "👈🏻",
+		Type.ARM_R : "👉🏻",
+		Type.LEG_L : "🦶",
+		Type.LEG_R : "👞",
+	}
+	const GENDERS = {
+		Gender.MASCULINE : "♂️",
+		Gender.FEMENINE : "♀️",
+	}
+	const VARIATIONS = {
+		Variation.HUMAN : "",
+		Variation.VAMPIRE : "🧛🏼‍♀️",
+		Variation.WEREWOLF : "🐺",
+	}
+	return "(%s%s%s)" % [GENDERS.get(gender, ""), VARIATIONS.get(variation, ""), TYPES.get(type, "")]
