@@ -37,4 +37,3 @@ func _set_joystick_iconset(iconset: int) -> void:
 	if joystick_iconset != iconset:
 		joystick_iconset = iconset
 		joystick_iconset_changed.emit(joystick_iconset)
-
