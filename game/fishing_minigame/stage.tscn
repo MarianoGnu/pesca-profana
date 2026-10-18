@@ -1,8 +1,27 @@
 [gd_scene format=3 uid="uid://m3vvg83p2sma"]
 
 [ext_resource type="Script" uid="uid://h58albkajyqf" path="res://game/fishing_minigame/igor.gd" id="1_eijj6"]
+[ext_resource type="Script" uid="uid://cdj2j4s0ruk6o" path="res://game/fishing_minigame/stage.gd" id="1_f74kx"]
+[ext_resource type="PackedScene" uid="uid://bbeqvpwpsfln7" path="res://game/fishing_minigame/fishing_minigame.tscn" id="3_tgqly"]
+
+[sub_resource type="Curve" id="Curve_f74kx"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5052265, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_f74kx"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tgqly"]
+gradient = SubResource("Gradient_f74kx")
+width = 20
+height = 200
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
 
 [sub_resource type="Gradient" id="Gradient_eijj6"]
+colors = PackedColorArray(0.18359044, 0.18359044, 0.18359044, 1, 0.5370113, 0.5370113, 0.5370113, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_riqys"]
 gradient = SubResource("Gradient_eijj6")
@@ -265,22 +284,26 @@ advance_condition = &"pull"
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_o172d"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f74kx"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bhunq"]
+reset_ends = true
+states/End/position = Vector2(963, 114)
 states/Start/position = Vector2(374, 114)
 states/cast/node = SubResource("AnimationNodeAnimation_88o1f")
-states/cast/position = Vector2(566, 191)
+states/cast/position = Vector2(500, 195)
 states/idle/node = SubResource("AnimationNodeAnimation_3egcj")
-states/idle/position = Vector2(681, 191)
+states/idle/position = Vector2(615, 195)
 states/pull/node = SubResource("AnimationNodeAnimation_feoqn")
-states/pull/position = Vector2(681, 269)
+states/pull/position = Vector2(615, 273)
 states/wait/node = SubResource("AnimationNodeAnimation_mddte")
-states/wait/position = Vector2(566, 114)
-transitions = ["Start", "wait", SubResource("AnimationNodeStateMachineTransition_a3oqo"), "wait", "cast", SubResource("AnimationNodeStateMachineTransition_lwls3"), "cast", "idle", SubResource("AnimationNodeStateMachineTransition_jugoj"), "idle", "pull", SubResource("AnimationNodeStateMachineTransition_djw4x"), "pull", "idle", SubResource("AnimationNodeStateMachineTransition_81trd"), "idle", "wait", SubResource("AnimationNodeStateMachineTransition_o172d")]
-graph_offset = Vector2(-37, 79)
+states/wait/position = Vector2(500, 114)
+transitions = ["Start", "wait", SubResource("AnimationNodeStateMachineTransition_a3oqo"), "wait", "cast", SubResource("AnimationNodeStateMachineTransition_lwls3"), "cast", "idle", SubResource("AnimationNodeStateMachineTransition_jugoj"), "idle", "pull", SubResource("AnimationNodeStateMachineTransition_djw4x"), "pull", "idle", SubResource("AnimationNodeStateMachineTransition_81trd"), "idle", "wait", SubResource("AnimationNodeStateMachineTransition_f74kx")]
+graph_offset = Vector2(210, 113)
 
 [node name="Stage" type="Node2D" unique_id=987376960]
+script = ExtResource("1_f74kx")
+cast_curve = SubResource("Curve_f74kx")
 
 [node name="Tierra" type="Polygon2D" parent="." unique_id=436280313]
 color = Color(0.5222752, 0.28873143, 0.025688825, 1)
@@ -310,15 +333,19 @@ S
 A
 "
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1773966967]
+[node name="CastProgress" type="TextureProgressBar" parent="." unique_id=1773966967]
+unique_name_in_owner = true
 offset_left = 592.0
 offset_top = 312.0
 offset_right = 612.0
 offset_bottom = 512.0
+max_value = 1.0
+step = 0.0
 fill_mode = 3
-texture_under = SubResource("GradientTexture2D_riqys")
+texture_under = SubResource("GradientTexture2D_tgqly")
+texture_progress = SubResource("GradientTexture2D_riqys")
 
-[node name="ColorRect" type="Panel" parent="TextureProgressBar" unique_id=1237613967]
+[node name="ColorRect" type="Panel" parent="CastProgress" unique_id=1237613967]
 self_modulate = Color(0.82, 0.3116, 0.7691598, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -331,7 +358,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="TextureProgressBar/ColorRect" unique_id=1220955199]
+[node name="Label" type="Label" parent="CastProgress/ColorRect" unique_id=1220955199]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -342,7 +369,7 @@ text = "👁"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect3" type="Panel" parent="TextureProgressBar" unique_id=1924082938]
+[node name="ColorRect3" type="Panel" parent="CastProgress" unique_id=1924082938]
 self_modulate = Color(0.32118574, 0.37454826, 0.7409843, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -357,7 +384,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="TextureProgressBar/ColorRect3" unique_id=1952499476]
+[node name="Label" type="Label" parent="CastProgress/ColorRect3" unique_id=1952499476]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -368,7 +395,7 @@ text = "🦾"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect4" type="Panel" parent="TextureProgressBar" unique_id=1529521569]
+[node name="ColorRect4" type="Panel" parent="CastProgress" unique_id=1529521569]
 self_modulate = Color(1, 0.01999998, 0.13433343, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -382,7 +409,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="TextureProgressBar/ColorRect4" unique_id=1928360212]
+[node name="Label" type="Label" parent="CastProgress/ColorRect4" unique_id=1928360212]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -393,7 +420,7 @@ text = "💀"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect2" type="Panel" parent="TextureProgressBar" unique_id=1413587834]
+[node name="ColorRect2" type="Panel" parent="CastProgress" unique_id=1413587834]
 self_modulate = Color(0.16345757, 0.5694829, 0.6869392, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -406,7 +433,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="TextureProgressBar/ColorRect2" unique_id=1889220259]
+[node name="Label" type="Label" parent="CastProgress/ColorRect2" unique_id=1889220259]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -418,8 +445,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Igor" type="Node2D" parent="." unique_id=101670147]
+unique_name_in_owner = true
 position = Vector2(656, 504)
 script = ExtResource("1_eijj6")
+test_pull = null
 
 [node name="Cuerpo" type="Sprite2D" parent="Igor" unique_id=1589526275]
 self_modulate = Color(0.54510003, 0.79, 0.58591664, 1)
@@ -495,3 +524,10 @@ texture = SubResource("GradientTexture2D_bhunq")
 [node name="Pantalones" type="Polygon2D" parent="Cliente3" unique_id=1520618214]
 color = Color(0.39, 0.39, 0.39, 1)
 polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
+
+[node name="FishingMinigame" parent="." unique_id=1643019011 instance=ExtResource("3_tgqly")]
+unique_name_in_owner = true
+offset_left = 160.0
+offset_top = 32.0
+offset_right = 480.0
+offset_bottom = 256.0

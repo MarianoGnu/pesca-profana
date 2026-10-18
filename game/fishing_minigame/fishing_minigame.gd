@@ -2,11 +2,17 @@
 class_name FishingMinigame
 extends Control
 
-enum State {
+signal reeled
+
+enum _State {
 	UNSTARTED,
 	WAITING,
 	HOOKED
 }
+
+const STATE_UNSTARTED = _State.UNSTARTED
+const STATE_WAITING = _State.WAITING
+const STATE_HOOKED = _State.HOOKED
 
 const BASE_SPEED = 1.0 # Radians per second
 
@@ -19,39 +25,39 @@ const BASE_SPEED = 1.0 # Radians per second
 @export var draw_inner_radius: float = 120
 @export var draw_mark_color := Color.AQUAMARINE
 
-var _state := State.UNSTARTED
+var _state := STATE_UNSTARTED
 
-# State waiting
+# _State waiting
 var _waiting_timer: float
 
-# State bitten
+# _State bitten
 var _part_library: BodyPartRegistry = load("uid://cb0f4kgpfdlny")
 var _hooked_part: BodyPart
 var _position: float
 var _dir: float = 1.0
 var _marks: Array[Mark]
-var _remaining_marks: int
 var _bg_color := Color.TRANSPARENT
 
 
 func _ready() -> void:
-	set_state(State.UNSTARTED)
+	set_state(STATE_UNSTARTED)
 
 
 func _process(p_delta: float) -> void:
 	match _state:
-		State.UNSTARTED:
-			if _is_action_just_pressed(&"action"):
-				set_state(State.WAITING)
-		State.WAITING:
+		STATE_UNSTARTED:
+			#if _is_action_just_pressed(&"action"):
+				#set_state(STATE_WAITING)
+			pass
+		STATE_WAITING:
 			if _is_action_just_pressed(&"ui_cancel"):
-				set_state(State.UNSTARTED)
+				set_state(STATE_UNSTARTED)
 				return
-			_waiting_timer -= p_delta
-			print(_waiting_timer)
-			if _waiting_timer <= 0:
-				set_state(State.HOOKED)
-		State.HOOKED:
+			#_waiting_timer -= p_delta
+			#print(_waiting_timer)
+			#if _waiting_timer <= 0:
+				#set_state(STATE_HOOKED)
+		STATE_HOOKED:
 			_position += BASE_SPEED * speed_factor * p_delta * _dir
 			_position = fmod(_position, TAU)
 			if _is_action_just_pressed(&"action"):
@@ -63,12 +69,9 @@ func _process(p_delta: float) -> void:
 						break
 				if !found:
 					_on_action_failed()
+				reeled.emit()
 				if _marks.size() == 0:
-					_remaining_marks -= 1
 					_init_marks()
-				if _remaining_marks <= 0:
-					print("WIN")
-					set_state(State.UNSTARTED)
 			queue_redraw()
 
 
@@ -78,7 +81,7 @@ func _validate_property(property: Dictionary) -> void:
 
 
 func _draw() -> void:
-	if _state != State.HOOKED:
+	if _state != STATE_HOOKED:
 		return
 	
 	if _bg_color.a > 0:
@@ -99,7 +102,7 @@ func _draw_marks() -> void:
 		draw_arc(center, mark_radius, mark.start, mark.end, 20, draw_mark_color, mark_width, true)
 
 
-func set_state(p_state: State) -> void:
+func set_state(p_state: _State) -> void:
 	_on_state_exit(_state)
 	_state = p_state
 	_on_state_enter(_state)
@@ -107,21 +110,20 @@ func set_state(p_state: State) -> void:
 
 func _on_state_exit(old_state) -> void:
 	match old_state:
-		State.UNSTARTED:
+		STATE_UNSTARTED:
 			%StartLabel.hide()
 
 
 func _on_state_enter(new_state) -> void:
 	match new_state:
-		State.UNSTARTED:
+		STATE_UNSTARTED:
 			%StartLabel.show()
 			queue_redraw()
-		State.WAITING:
+		STATE_WAITING:
 			_waiting_timer = randf_range(1.0, 2.0)
 			queue_redraw()
-		State.HOOKED:
+		STATE_HOOKED:
 			_hooked_part = _part_library.pick_random(max_rarity)
-			_remaining_marks = max_rarity + 1
 			_init_marks()
 
 
@@ -139,8 +141,6 @@ func _is_action_just_pressed(p_action: StringName) -> bool:
 
 func _init_marks():
 	_marks.clear()
-	if _remaining_marks <= 0:
-		return
 	var count: int = roundi(randf() * 4)
 	for i in count:
 		var candidate_size: float = (2 * PI) / randf_range(6, 10)
