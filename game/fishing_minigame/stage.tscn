@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://m3vvg83p2sma"]
 
+[ext_resource type="Script" uid="uid://h58albkajyqf" path="res://game/fishing_minigame/igor.gd" id="1_eijj6"]
+
 [sub_resource type="Gradient" id="Gradient_eijj6"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_riqys"]
@@ -28,6 +30,255 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
+
+[sub_resource type="Animation" id="Animation_i5yc3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Caña:points")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 48, 112)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Caña:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_eijj6"]
+resource_name = "cast"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(112, 0, 48, 112)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Caña:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_thptw"]
+resource_name = "idle"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 48, 112)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Caña:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_tgqly"]
+resource_name = "pull"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 48, 112), PackedVector2Array(24, -8, 56, 104), PackedVector2Array(0, 0, 48, 112)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Caña:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_f74kx"]
+resource_name = "wait"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tgqly"]
+_data = {
+&"RESET": SubResource("Animation_i5yc3"),
+&"cast": SubResource("Animation_eijj6"),
+&"idle": SubResource("Animation_thptw"),
+&"pull": SubResource("Animation_tgqly"),
+&"wait": SubResource("Animation_f74kx")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_88o1f"]
+animation = &"cast"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3egcj"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_feoqn"]
+animation = &"pull"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mddte"]
+animation = &"wait"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a3oqo"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lwls3"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jugoj"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_djw4x"]
+advance_condition = &"pull"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_81trd"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_o172d"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bhunq"]
+states/Start/position = Vector2(374, 114)
+states/cast/node = SubResource("AnimationNodeAnimation_88o1f")
+states/cast/position = Vector2(566, 191)
+states/idle/node = SubResource("AnimationNodeAnimation_3egcj")
+states/idle/position = Vector2(681, 191)
+states/pull/node = SubResource("AnimationNodeAnimation_feoqn")
+states/pull/position = Vector2(681, 269)
+states/wait/node = SubResource("AnimationNodeAnimation_mddte")
+states/wait/position = Vector2(566, 114)
+transitions = ["Start", "wait", SubResource("AnimationNodeStateMachineTransition_a3oqo"), "wait", "cast", SubResource("AnimationNodeStateMachineTransition_lwls3"), "cast", "idle", SubResource("AnimationNodeStateMachineTransition_jugoj"), "idle", "pull", SubResource("AnimationNodeStateMachineTransition_djw4x"), "pull", "idle", SubResource("AnimationNodeStateMachineTransition_81trd"), "idle", "wait", SubResource("AnimationNodeStateMachineTransition_o172d")]
+graph_offset = Vector2(-37, 79)
 
 [node name="Stage" type="Node2D" unique_id=987376960]
 
@@ -168,6 +419,7 @@ vertical_alignment = 1
 
 [node name="Igor" type="Node2D" parent="." unique_id=101670147]
 position = Vector2(656, 504)
+script = ExtResource("1_eijj6")
 
 [node name="Cuerpo" type="Sprite2D" parent="Igor" unique_id=1589526275]
 self_modulate = Color(0.54510003, 0.79, 0.58591664, 1)
@@ -201,6 +453,15 @@ default_color = Color(0.2509804, 0.14117648, 0.019607844, 1)
 position = Vector2(-64, -152)
 points = PackedVector2Array(0, 0, 48, 112)
 default_color = Color(0.41363606, 0.19966188, 0.051181525, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Igor" unique_id=1857707924]
+libraries/ = SubResource("AnimationLibrary_tgqly")
+next/cast = &"idle"
+
+[node name="AnimationTree" type="AnimationTree" parent="Igor" unique_id=1174008063]
+tree_root = SubResource("AnimationNodeStateMachine_bhunq")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/pull = false
 
 [node name="Cliente" type="Sprite2D" parent="." unique_id=931510773]
 modulate = Color(0.57, 0.5567, 0.4104, 1)
