@@ -1,0 +1,236 @@
+[gd_scene format=3 uid="uid://m3vvg83p2sma"]
+
+[sub_resource type="Gradient" id="Gradient_eijj6"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_riqys"]
+gradient = SubResource("Gradient_eijj6")
+width = 20
+height = 200
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhunq"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_i5yc3"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bhunq"]
+gradient = SubResource("Gradient_i5yc3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[node name="Stage" type="Node2D" unique_id=987376960]
+
+[node name="Tierra" type="Polygon2D" parent="." unique_id=436280313]
+color = Color(0.5222752, 0.28873143, 0.025688825, 1)
+polygon = PackedVector2Array(-46, -20, 1219, -43, 1222, 676, -70, 665)
+
+[node name="Fosa" type="Polygon2D" parent="." unique_id=2070891285]
+clip_children = 2
+color = Color(0.2954147, 0.15402547, 0.011444795, 1)
+polygon = PackedVector2Array(269, 320, 445, 328, 478, 412, 592, 460, 516, 581, 338, 597, 211, 540, 100, 607, 25, 492, 63, 350, 214, 359)
+
+[node name="Fosa" type="Polygon2D" parent="Fosa" unique_id=112399110]
+position = Vector2(0, 36)
+color = Color(0.10743686, 0.041772723, 0.001894691, 1)
+polygon = PackedVector2Array(269, 320, 434, 326, 466, 400, 592, 460, 516, 581, 338, 597, 211, 540, 100, 607, 25, 492, 76, 354, 214, 359)
+
+[node name="Mesa" type="Polygon2D" parent="." unique_id=1507726799]
+position = Vector2(728, 408)
+color = Color(0.15555057, 0.56062984, 0.21243551, 1)
+polygon = PackedVector2Array(-23.364788, -103.473946, 24.635212, -103.473946, 24.635212, 184.52606, -23.364788, 184.52606)
+
+[node name="Label" type="Label" parent="Mesa" unique_id=1137691809]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "M
+E
+S
+A
+"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1773966967]
+offset_left = 592.0
+offset_top = 312.0
+offset_right = 612.0
+offset_bottom = 512.0
+fill_mode = 3
+texture_under = SubResource("GradientTexture2D_riqys")
+
+[node name="ColorRect" type="Panel" parent="TextureProgressBar" unique_id=1237613967]
+self_modulate = Color(0.82, 0.3116, 0.7691598, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.64
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_right = -8.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureProgressBar/ColorRect" unique_id=1220955199]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "👁"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect3" type="Panel" parent="TextureProgressBar" unique_id=1924082938]
+self_modulate = Color(0.32118574, 0.37454826, 0.7409843, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.2
+anchor_top = 0.4
+anchor_right = -1.2
+anchor_bottom = 0.76
+offset_left = -32.0
+offset_right = -8.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureProgressBar/ColorRect3" unique_id=1952499476]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "🦾"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect4" type="Panel" parent="TextureProgressBar" unique_id=1529521569]
+self_modulate = Color(1, 0.01999998, 0.13433343, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.2
+anchor_right = -1.2
+anchor_bottom = 0.36
+offset_left = -32.0
+offset_right = -8.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureProgressBar/ColorRect4" unique_id=1928360212]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "💀"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect2" type="Panel" parent="TextureProgressBar" unique_id=1413587834]
+self_modulate = Color(0.16345757, 0.5694829, 0.6869392, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.22
+anchor_bottom = 0.6
+offset_left = -32.0
+offset_right = -8.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="TextureProgressBar/ColorRect2" unique_id=1889220259]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "👣"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Igor" type="Node2D" parent="." unique_id=101670147]
+position = Vector2(656, 504)
+
+[node name="Cuerpo" type="Sprite2D" parent="Igor" unique_id=1589526275]
+self_modulate = Color(0.54510003, 0.79, 0.58591664, 1)
+clip_children = 2
+position = Vector2(0, -32)
+scale = Vector2(0.75, 1)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Igor/Cuerpo" unique_id=1635610837]
+color = Color(0.10233485, 0.39497507, 0.14376396, 1)
+polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
+
+[node name="Cabeza" type="Sprite2D" parent="Igor" unique_id=956304964]
+self_modulate = Color(0.54510003, 0.79, 0.58591664, 1)
+clip_children = 2
+position = Vector2(0, -72)
+scale = Vector2(0.50000024, 0.5)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pelo" type="Polygon2D" parent="Igor/Cabeza" unique_id=612875196]
+position = Vector2(0, 80)
+scale = Vector2(1.4999993, 2)
+color = Color(0.25201756, 0.14505628, 0.020455906, 1)
+polygon = PackedVector2Array(-21.333313, -48, -10.666687, -48, 0, -40, 10.666687, -48, 21.333313, -40, 32, -64, -32, -64)
+
+[node name="Line2D" type="Line2D" parent="Igor/Cabeza" unique_id=535042434]
+points = PackedVector2Array(-16, 0, -48, 16)
+default_color = Color(0.2509804, 0.14117648, 0.019607844, 1)
+
+[node name="Caña" type="Line2D" parent="Igor" unique_id=1456731544]
+position = Vector2(-64, -152)
+points = PackedVector2Array(0, 0, 48, 112)
+default_color = Color(0.41363606, 0.19966188, 0.051181525, 1)
+
+[node name="Cliente" type="Sprite2D" parent="." unique_id=931510773]
+modulate = Color(0.57, 0.5567, 0.4104, 1)
+clip_children = 2
+position = Vector2(903.99994, 504)
+scale = Vector2(1.7499976, 2.25)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Cliente" unique_id=1886534612]
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
+
+[node name="Cliente2" type="Sprite2D" parent="." unique_id=1697724395]
+modulate = Color(0.57, 0.5567, 0.4104, 1)
+clip_children = 2
+position = Vector2(1015.9999, 504)
+scale = Vector2(1.7499976, 2.25)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Cliente2" unique_id=840279091]
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
+
+[node name="Cliente3" type="Sprite2D" parent="." unique_id=1663765819]
+modulate = Color(0.57, 0.5567, 0.4104, 1)
+clip_children = 2
+position = Vector2(1128, 504)
+scale = Vector2(1.7499976, 2.25)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Cliente3" unique_id=1520618214]
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
