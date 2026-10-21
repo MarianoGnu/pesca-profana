@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c8kkutbrcpwsy"]
+
+[ext_resource type="AudioStream" uid="uid://bnxh31tpom5lv" path="res://assets/audio/music/main_theme.ogg" id="1_318sy"]
+
+[node name="MainScreen" type="Node2D" unique_id=1486976559]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1170718855]
+stream = ExtResource("1_318sy")
+autoplay = true
+bus = &"music"
