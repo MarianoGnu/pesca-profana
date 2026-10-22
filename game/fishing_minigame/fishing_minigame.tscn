@@ -26,7 +26,6 @@ alignment = 1
 
 [node name="StartLabel" type="Label" parent="Center" unique_id=1217220375]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
-text = "PRESS {action} TO START FISHING"
+text = "HOLD {action} TO CAST"
 script = ExtResource("2_3kdh2")

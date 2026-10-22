@@ -1,0 +1,673 @@
+[gd_scene format=3 uid="uid://m3vvg83p2sma"]
+
+[ext_resource type="Script" uid="uid://h58albkajyqf" path="res://game/fishing_minigame/igor.gd" id="1_eijj6"]
+[ext_resource type="Script" uid="uid://cdj2j4s0ruk6o" path="res://game/fishing_minigame/stage.gd" id="1_f74kx"]
+[ext_resource type="Script" uid="uid://yc2kpj5nflc0" path="res://game/fishing_minigame/fishing_line.gd" id="3_0st1p"]
+[ext_resource type="PackedScene" uid="uid://bbeqvpwpsfln7" path="res://game/fishing_minigame/fishing_minigame.tscn" id="3_tgqly"]
+[ext_resource type="AudioStream" uid="uid://bnxh31tpom5lv" path="res://assets/audio/music/main_theme.ogg" id="4_tgqly"]
+[ext_resource type="AudioStream" uid="uid://nn1hjyoga4lv" path="res://assets/audio/fx/fishing_noices/normal_line_1.wav" id="5_feoqn"]
+[ext_resource type="AudioStream" uid="uid://cvejsioh6fkxu" path="res://assets/audio/fx/fishing_noices/normal_line_2.wav" id="6_mddte"]
+[ext_resource type="AudioStream" uid="uid://dhco1pxggvxxe" path="res://assets/audio/fx/fishing_noices/normal_line_3.wav" id="7_a3oqo"]
+[ext_resource type="AudioStream" uid="uid://bcha3j6tvwsal" path="res://assets/audio/fx/fishing_noices/fast_line_1.wav" id="8_lwls3"]
+[ext_resource type="AudioStream" uid="uid://cfuhl24ipvoby" path="res://assets/audio/fx/fishing_noices/fast_line_2.wav" id="9_jugoj"]
+[ext_resource type="AudioStream" uid="uid://bpsv30jd0638w" path="res://assets/audio/fx/fishing_noices/fast_line_3.wav" id="10_djw4x"]
+[ext_resource type="AudioStream" uid="uid://dj6pt5q1bdtpo" path="res://assets/audio/fx/fishing_noices/splash_1.wav" id="11_o172d"]
+[ext_resource type="AudioStream" uid="uid://jnko0jsc1aa2" path="res://assets/audio/fx/fishing_noices/spash_2.wav" id="12_0st1p"]
+[ext_resource type="AudioStream" uid="uid://doh5w7cduvt18" path="res://assets/audio/fx/fishing_noices/splash_3.wav" id="13_6wvna"]
+[ext_resource type="AudioStream" uid="uid://cxs5hh8opxkmt" path="res://assets/audio/fx/fishing_noices/splash_4.wav" id="14_4lvjx"]
+[ext_resource type="AudioStream" uid="uid://dce1rfjppcdnp" path="res://assets/audio/fx/misc/fishing_right.wav" id="16_4lvjx"]
+[ext_resource type="AudioStream" uid="uid://dpyppfwxwsy8w" path="res://assets/audio/fx/misc/fishing_wrong.wav" id="17_rgeny"]
+
+[sub_resource type="Curve" id="Curve_f74kx"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5052265, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_f74kx"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tgqly"]
+gradient = SubResource("Gradient_f74kx")
+width = 20
+height = 200
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_eijj6"]
+colors = PackedColorArray(0.18359044, 0.18359044, 0.18359044, 1, 0.5370113, 0.5370113, 0.5370113, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_riqys"]
+gradient = SubResource("Gradient_eijj6")
+width = 20
+height = 200
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhunq"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_i5yc3"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bhunq"]
+gradient = SubResource("Gradient_i5yc3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Animation" id="Animation_i5yc3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Caña:points")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 48, 112)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Caña:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_eijj6"]
+resource_name = "cast"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(112, 0, 48, 112)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Caña:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_thptw"]
+resource_name = "idle"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 48, 112)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Caña:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_tgqly"]
+resource_name = "pull"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:points")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [PackedVector2Array(0, 0, 48, 112), PackedVector2Array(24, -8, 56, 104), PackedVector2Array(0, 0, 48, 112)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Caña:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_f74kx"]
+resource_name = "wait"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Caña:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tgqly"]
+_data = {
+&"RESET": SubResource("Animation_i5yc3"),
+&"cast": SubResource("Animation_eijj6"),
+&"idle": SubResource("Animation_thptw"),
+&"pull": SubResource("Animation_tgqly"),
+&"wait": SubResource("Animation_f74kx")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_88o1f"]
+animation = &"cast"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3egcj"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_feoqn"]
+animation = &"pull"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mddte"]
+animation = &"wait"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a3oqo"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lwls3"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jugoj"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_djw4x"]
+advance_condition = &"pull"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_81trd"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f74kx"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bhunq"]
+reset_ends = true
+states/End/position = Vector2(963, 114)
+states/Start/position = Vector2(374, 114)
+states/cast/node = SubResource("AnimationNodeAnimation_88o1f")
+states/cast/position = Vector2(500, 195)
+states/idle/node = SubResource("AnimationNodeAnimation_3egcj")
+states/idle/position = Vector2(615, 195)
+states/pull/node = SubResource("AnimationNodeAnimation_feoqn")
+states/pull/position = Vector2(615, 273)
+states/wait/node = SubResource("AnimationNodeAnimation_mddte")
+states/wait/position = Vector2(500, 114)
+transitions = ["Start", "wait", SubResource("AnimationNodeStateMachineTransition_a3oqo"), "wait", "cast", SubResource("AnimationNodeStateMachineTransition_lwls3"), "cast", "idle", SubResource("AnimationNodeStateMachineTransition_jugoj"), "idle", "pull", SubResource("AnimationNodeStateMachineTransition_djw4x"), "pull", "idle", SubResource("AnimationNodeStateMachineTransition_81trd"), "idle", "wait", SubResource("AnimationNodeStateMachineTransition_f74kx")]
+graph_offset = Vector2(210, 113)
+
+[sub_resource type="Curve2D" id="Curve2D_6wvna"]
+_data = {
+"points": PackedVector2Array(28.6, -75.9, -28.6, 75.9, 592, 352, 0, 0, 0, 0, 72, 503.99994)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_o172d"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 584, 0, 33.296917, 0, -33.296917, 0, 536, -56, 26.287039, 0.35049385, -26.287039, -0.35049385, 480, -8, 33.997902, 2.102963, -33.997902, -2.102963, 416, -48, 23.833582, 2.803953, -23.833582, -2.803953, 352, 0, 39.605804, 4.2059293, -39.605804, -4.2059293, 280, -48, 0, 0, 0, 0, 184.00003, -23.99997)
+}
+point_count = 7
+
+[sub_resource type="Shader" id="Shader_riqys"]
+code = "shader_type canvas_item;
+
+uniform float wave_force: hint_range(0.0, 1.0, 0.1) = 1.0;
+uniform float waveness: hint_range(0.0, 50.0, 0.5) = 5.0;
+uniform float speed: hint_range(0.0, 20.0, 0.1) = 1.0;
+
+void fragment() {
+	vec2 uv = UV;
+	uv.y += sin(TIME * speed + uv.x * waveness) * wave_force * 0.1;
+	COLOR = texture(TEXTURE, uv) * vec4(COLOR.rgb, 1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bhunq"]
+shader = SubResource("Shader_riqys")
+shader_parameter/wave_force = 0.70000001043084
+shader_parameter/waveness = 11.0
+shader_parameter/speed = 4.80000007152576
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o172d"]
+gradient = SubResource("Gradient_i5yc3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.90000004, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bhunq"]
+streams_count = 3
+stream_0/stream = ExtResource("5_feoqn")
+stream_1/stream = ExtResource("6_mddte")
+stream_2/stream = ExtResource("7_a3oqo")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_81trd"]
+streams_count = 3
+stream_0/stream = ExtResource("8_lwls3")
+stream_1/stream = ExtResource("9_jugoj")
+stream_2/stream = ExtResource("10_djw4x")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rgeny"]
+streams_count = 4
+stream_0/stream = ExtResource("11_o172d")
+stream_1/stream = ExtResource("12_0st1p")
+stream_2/stream = ExtResource("13_6wvna")
+stream_3/stream = ExtResource("14_4lvjx")
+
+[node name="Stage" type="Node2D" unique_id=987376960]
+script = ExtResource("1_f74kx")
+cast_curve = SubResource("Curve_f74kx")
+
+[node name="Tierra" type="Polygon2D" parent="." unique_id=436280313]
+color = Color(0.5222752, 0.28873143, 0.025688825, 1)
+polygon = PackedVector2Array(-46, -20, 1219, -43, 1222, 676, -70, 665)
+
+[node name="Fosa" type="Polygon2D" parent="." unique_id=2070891285]
+clip_children = 2
+color = Color(0.2954147, 0.15402547, 0.011444795, 1)
+polygon = PackedVector2Array(269, 320, 445, 328, 478, 412, 592, 460, 516, 581, 338, 597, 211, 540, 100, 607, 25, 492, 63, 350, 214, 359)
+
+[node name="Fosa" type="Polygon2D" parent="Fosa" unique_id=112399110]
+position = Vector2(0, 36)
+color = Color(0.27850002, 0.75, 0.135, 1)
+polygon = PackedVector2Array(269, 320, 434, 326, 466, 400, 592, 460, 516, 581, 338, 597, 211, 540, 100, 607, 25, 492, 76, 354, 214, 359)
+
+[node name="Mesa" type="Polygon2D" parent="." unique_id=1507726799]
+position = Vector2(728, 408)
+color = Color(0.15555057, 0.56062984, 0.21243551, 1)
+polygon = PackedVector2Array(-23.364788, -103.473946, 24.635212, -103.473946, 24.635212, 184.52606, -23.364788, 184.52606)
+
+[node name="Label" type="Label" parent="Mesa" unique_id=1137691809]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "M
+E
+S
+A
+"
+
+[node name="CastProgress" type="TextureProgressBar" parent="." unique_id=1773966967]
+unique_name_in_owner = true
+offset_left = 592.0
+offset_top = 312.0
+offset_right = 612.0
+offset_bottom = 512.0
+max_value = 1.0
+step = 0.0
+fill_mode = 3
+texture_under = SubResource("GradientTexture2D_tgqly")
+texture_progress = SubResource("GradientTexture2D_riqys")
+
+[node name="ColorRect" type="Panel" parent="CastProgress" unique_id=1237613967]
+self_modulate = Color(0.82, 0.3116, 0.7691598, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.64
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_right = -8.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CastProgress/ColorRect" unique_id=1220955199]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "👁"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect3" type="Panel" parent="CastProgress" unique_id=1924082938]
+self_modulate = Color(0.32118574, 0.37454826, 0.7409843, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.2
+anchor_top = 0.4
+anchor_right = -1.2
+anchor_bottom = 0.76
+offset_left = -32.0
+offset_right = -8.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CastProgress/ColorRect3" unique_id=1952499476]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "🦾"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect4" type="Panel" parent="CastProgress" unique_id=1529521569]
+self_modulate = Color(1, 0.01999998, 0.13433343, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.2
+anchor_right = -1.2
+anchor_bottom = 0.36
+offset_left = -32.0
+offset_right = -8.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CastProgress/ColorRect4" unique_id=1928360212]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "💀"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect2" type="Panel" parent="CastProgress" unique_id=1413587834]
+self_modulate = Color(0.16345757, 0.5694829, 0.6869392, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.22
+anchor_bottom = 0.6
+offset_left = -32.0
+offset_right = -8.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CastProgress/ColorRect2" unique_id=1889220259]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "👣"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Igor" type="Node2D" parent="." unique_id=101670147]
+unique_name_in_owner = true
+position = Vector2(656, 504)
+script = ExtResource("1_eijj6")
+
+[node name="Cuerpo" type="Sprite2D" parent="Igor" unique_id=1589526275]
+self_modulate = Color(0.54510003, 0.79, 0.58591664, 1)
+clip_children = 2
+position = Vector2(0, -32)
+scale = Vector2(0.75, 1)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Igor/Cuerpo" unique_id=1635610837]
+color = Color(0.10233485, 0.39497507, 0.14376396, 1)
+polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
+
+[node name="Cabeza" type="Sprite2D" parent="Igor" unique_id=956304964]
+self_modulate = Color(0.54510003, 0.79, 0.58591664, 1)
+clip_children = 2
+position = Vector2(0, -72)
+scale = Vector2(0.50000024, 0.5)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pelo" type="Polygon2D" parent="Igor/Cabeza" unique_id=612875196]
+position = Vector2(0, 80)
+scale = Vector2(1.4999993, 2)
+color = Color(0.25201756, 0.14505628, 0.020455906, 1)
+polygon = PackedVector2Array(-21.333313, -48, -10.666687, -48, 0, -40, 10.666687, -48, 21.333313, -40, 32, -64, -32, -64)
+
+[node name="Line2D" type="Line2D" parent="Igor/Cabeza" unique_id=535042434]
+points = PackedVector2Array(-16, 0, -48, 16)
+default_color = Color(0.2509804, 0.14117648, 0.019607844, 1)
+
+[node name="Caña" type="Line2D" parent="Igor" unique_id=1456731544]
+position = Vector2(-64, -152)
+points = PackedVector2Array(0, 0, 48, 112)
+default_color = Color(0.41363606, 0.19966188, 0.051181525, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Igor" unique_id=1857707924]
+libraries/ = SubResource("AnimationLibrary_tgqly")
+next/cast = &"idle"
+
+[node name="AnimationTree" type="AnimationTree" parent="Igor" unique_id=1174008063]
+tree_root = SubResource("AnimationNodeStateMachine_bhunq")
+anim_player = NodePath("../AnimationPlayer")
+parameters/conditions/pull = false
+
+[node name="FishingLine" type="Path2D" parent="." unique_id=2100251020 node_paths=PackedStringArray("_fishing_rod", "_hooked_part", "_fishing_line")]
+visible = false
+curve = SubResource("Curve2D_6wvna")
+script = ExtResource("3_0st1p")
+_fishing_rod = NodePath("../Igor/Caña")
+_hooked_part = NodePath("../Path2D/HookedPart")
+_fishing_line = NodePath("Line2D")
+
+[node name="Line2D" type="Line2D" parent="FishingLine" unique_id=252232074]
+points = PackedVector2Array(592, 352, 590.324, 355.55768, 587.992, 359.1139, 585.02576, 362.6669, 583.3115, 364.44168, 581.447, 366.21497, 579.4349, 367.98657, 577.2777, 369.75635, 574.9785, 371.524, 572.5398, 373.28928, 569.96436, 375.05203, 567.2549, 376.81204, 564.4141, 378.56903, 561.44495, 380.32285, 558.3499, 382.07324, 555.1317, 383.82, 551.7933, 385.5629, 548.3373, 387.3017, 544.7663, 389.03622, 541.08325, 390.76627, 537.29065, 392.49155, 533.3915, 394.2119, 529.3883, 395.92706, 525.2838, 397.63684, 521.081, 399.34103, 516.7822, 401.03943, 512.3905, 402.73172, 507.9085, 404.41782, 503.33887, 406.09738, 498.6844, 407.77032, 496.32617, 408.6042, 493.94778, 409.43628, 491.54956, 410.26663, 489.13177, 411.09515, 486.69485, 411.9218, 484.23914, 412.74667, 481.76486, 413.5696, 479.27252, 414.39063, 476.76236, 415.2097, 474.23477, 416.02676, 471.69, 416.84186, 469.12848, 417.6549, 466.5505, 418.46597, 463.95645, 419.2748, 461.34665, 420.08167, 458.72147, 420.88635, 456.08118, 421.68884, 453.42618, 422.4892, 450.75674, 423.28732, 448.0733, 424.0831, 445.37613, 424.8767, 442.6656, 425.668, 439.94208, 426.45694, 437.2058, 427.24353, 434.45724, 428.02777, 431.6967, 428.80954, 428.92447, 429.5889, 426.14093, 430.3658, 423.3464, 431.14023, 420.54123, 431.91208, 417.7258, 432.68146, 414.90042, 433.44824, 412.0654, 434.21237, 409.22113, 434.97394, 406.3679, 435.73282, 403.5061, 436.48898, 400.63608, 437.2425, 397.75812, 437.99323, 394.87265, 438.74124, 391.9799, 439.48645, 389.08026, 440.22882, 386.17413, 440.96832, 383.26178, 441.70502, 380.34357, 442.43875, 377.41986, 443.16956, 374.49094, 443.89743, 371.55725, 444.6223, 368.61902, 445.34418, 365.67664, 446.06305, 362.73044, 446.77878, 359.7808, 447.4915, 356.828, 448.20102, 353.87247, 448.90747, 350.91443, 449.6107, 347.9543, 450.3107, 344.9925, 451.0075, 342.0292, 451.70108, 339.06482, 452.39133, 336.0997, 453.0783, 333.1342, 453.76193, 330.1686, 454.44217, 327.2033, 455.11902, 324.2387, 455.79248, 321.27502, 456.46246, 318.31265, 457.12897, 315.35193, 457.792, 312.3932, 458.45148, 309.4368, 459.10745, 306.48306, 459.7598, 303.53232, 460.4085, 300.58496, 461.0536, 297.64136, 461.69507, 294.70172, 462.33276, 291.7665, 462.9668, 288.83597, 463.5971, 285.9105, 464.2236, 282.99048, 464.84625, 280.07617, 465.46515, 277.16797, 466.08017, 274.26617, 466.69128, 271.37115, 467.29852, 268.48328, 467.9018, 265.60278, 468.5011, 262.73013, 469.09644, 259.8656, 469.6877, 257.00952, 470.27496, 254.16232, 470.85815, 251.32422, 471.43726, 248.49564, 472.01215, 245.67693, 472.58298, 242.86835, 473.1496, 240.07031, 473.71198, 237.28313, 474.27014, 234.50722, 474.82404, 231.74278, 475.37363, 228.99023, 475.91888, 226.24994, 476.45984, 223.5222, 476.9964, 220.80739, 477.52856, 218.10583, 478.05627, 215.41786, 478.57956, 212.74382, 479.09833, 210.08408, 479.6126, 207.43892, 480.1223, 204.80873, 480.6275, 202.19383, 481.12808, 199.59462, 481.62402, 197.01135, 482.1153, 194.44441, 482.60193, 191.89415, 483.08386, 189.36087, 483.5611, 186.84499, 484.0335, 184.34676, 484.50116, 181.86655, 484.96405, 176.96162, 485.87518, 172.1329, 486.76675, 167.38315, 487.63855, 162.71504, 488.4903, 158.13136, 489.32184, 153.63481, 490.13293, 149.22812, 490.92337, 144.91403, 491.69293, 140.69528, 492.44138, 136.57457, 493.16852, 132.55466, 493.87408, 128.63826, 494.55792, 124.8281, 495.2198, 121.12692, 495.85944, 117.53745, 496.4767, 114.06242, 497.07135, 110.70455, 497.64313, 107.46658, 498.19183, 104.35123, 498.7173, 101.36124, 499.2192, 98.49934, 499.69742, 95.76825, 500.15167, 93.1707, 500.5818, 88.38718, 501.36865, 84.1706, 502.05627, 80.5428, 502.64288, 77.525635, 503.12677, 73.41053, 503.7793, 72, 503.99994)
+width = 1.0
+
+[node name="Path2D" type="Path2D" parent="." unique_id=1866000110]
+position = Vector2(656, 504)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+curve = SubResource("Curve2D_o172d")
+
+[node name="HookedPart" type="PathFollow2D" parent="Path2D" unique_id=787751811]
+unique_name_in_owner = true
+position = Vector2(584, 0)
+rotation = -1.8275559
+cubic_interp = false
+loop = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/HookedPart" unique_id=2097779768]
+self_modulate = Color(0.15492907, 0.43313256, 0.0736405, 1)
+material = SubResource("ShaderMaterial_bhunq")
+position = Vector2(-7.9917603, -0.29937744)
+scale = Vector2(0.93301153, 0.60784096)
+texture = SubResource("GradientTexture2D_o172d")
+
+[node name="Cliente" type="Sprite2D" parent="." unique_id=931510773]
+modulate = Color(0.57, 0.5567, 0.4104, 1)
+clip_children = 2
+position = Vector2(903.99994, 504)
+scale = Vector2(1.7499976, 2.25)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Cliente" unique_id=1886534612]
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
+
+[node name="Cliente2" type="Sprite2D" parent="." unique_id=1697724395]
+modulate = Color(0.57, 0.5567, 0.4104, 1)
+clip_children = 2
+position = Vector2(1015.9999, 504)
+scale = Vector2(1.7499976, 2.25)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Cliente2" unique_id=840279091]
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
+
+[node name="Cliente3" type="Sprite2D" parent="." unique_id=1663765819]
+modulate = Color(0.57, 0.5567, 0.4104, 1)
+clip_children = 2
+position = Vector2(1128, 504)
+scale = Vector2(1.7499976, 2.25)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Cliente3" unique_id=1520618214]
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
+
+[node name="FishingMinigame" parent="." unique_id=1643019011 instance=ExtResource("3_tgqly")]
+unique_name_in_owner = true
+offset_left = 160.0
+offset_top = 32.0
+offset_right = 480.0
+offset_bottom = 256.0
+speed_factor = 3.0
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=684811271]
+stream = ExtResource("4_tgqly")
+autoplay = true
+bus = &"music"
+
+[node name="CastLine" type="AudioStreamPlayer" parent="." unique_id=116178430]
+stream = SubResource("AudioStreamRandomizer_bhunq")
+
+[node name="Pull" type="AudioStreamPlayer" parent="." unique_id=1601305304]
+stream = SubResource("AudioStreamRandomizer_81trd")
+
+[node name="Reel" type="AudioStreamPlayer" parent="." unique_id=616597581]
+stream = SubResource("AudioStreamRandomizer_81trd")
+
+[node name="Splash" type="AudioStreamPlayer" parent="." unique_id=519020923]
+stream = SubResource("AudioStreamRandomizer_rgeny")
+
+[node name="GoodCatch" type="AudioStreamPlayer" parent="." unique_id=80554876]
+stream = ExtResource("16_4lvjx")
+
+[node name="BadCatch" type="AudioStreamPlayer" parent="." unique_id=990486756]
+stream = ExtResource("17_rgeny")
+
+[connection signal="bad_catched" from="." to="Path2D/HookedPart" method="hide"]
+[connection signal="bad_catched" from="." to="BadCatch" method="play"]
+[connection signal="good_catched" from="." to="Path2D/HookedPart" method="hide"]
+[connection signal="good_catched" from="." to="GoodCatch" method="play"]
+[connection signal="hooked" from="." to="Path2D/HookedPart" method="show"]
+[connection signal="hooked" from="." to="Path2D/HookedPart" method="set_progress_ratio" binds= [0.0]]
+[connection signal="line_casted" from="." to="CastLine" method="play"]
+[connection signal="ready" from="Path2D/HookedPart" to="Path2D/HookedPart" method="hide"]
+[connection signal="reel_miss" from="FishingMinigame" to="Igor" method="pull"]
+[connection signal="reel_miss" from="FishingMinigame" to="Splash" method="play"]
+[connection signal="reeled" from="FishingMinigame" to="Igor" method="pull"]
+[connection signal="reeled" from="FishingMinigame" to="Pull" method="play"]

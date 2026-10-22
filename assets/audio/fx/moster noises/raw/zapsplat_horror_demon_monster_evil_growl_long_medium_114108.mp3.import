@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cfysilpiq2tfj"
+path="res://.godot/imported/zapsplat_horror_demon_monster_evil_growl_long_medium_114108.mp3-ee78a0ac125cc56d72c790a19a7644f3.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/fx/moster noises/raw/zapsplat_horror_demon_monster_evil_growl_long_medium_114108.mp3"
+dest_files=["res://.godot/imported/zapsplat_horror_demon_monster_evil_growl_long_medium_114108.mp3-ee78a0ac125cc56d72c790a19a7644f3.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
