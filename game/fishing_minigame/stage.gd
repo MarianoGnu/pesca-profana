@@ -7,6 +7,8 @@ enum {
 	STATE_FISHING,
 }
 
+signal line_casted
+
 @export var cast_curve: Curve
 
 @onready var _fishing_minigame: FishingMinigame = %FishingMinigame
@@ -53,6 +55,7 @@ func _on_enter_state(p_state: int) -> void:
 			_fishing_minigame.set_state(FishingMinigame.STATE_WAITING)
 		STATE_CAST_ANIM:
 			_igor.casting = false
+			line_casted.emit()
 			await get_tree().create_timer(0.5).timeout
 			_on_enter_state(STATE_FISHING)
 		STATE_FISHING:

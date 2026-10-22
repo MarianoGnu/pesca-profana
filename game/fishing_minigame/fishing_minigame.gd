@@ -3,6 +3,7 @@ class_name FishingMinigame
 extends Control
 
 signal reeled
+signal reel_miss
 
 enum _State {
 	UNSTARTED,
@@ -131,6 +132,7 @@ func _on_action_failed() -> void:
 	_bg_color = Color.RED
 	var tw = create_tween()
 	tw.tween_property(self, ^"_bg_color", Color.TRANSPARENT, 0.5)
+	reel_miss.emit()
 
 
 func _is_action_just_pressed(p_action: StringName) -> bool:

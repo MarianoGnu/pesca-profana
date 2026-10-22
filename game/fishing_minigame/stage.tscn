@@ -3,6 +3,17 @@
 [ext_resource type="Script" uid="uid://h58albkajyqf" path="res://game/fishing_minigame/igor.gd" id="1_eijj6"]
 [ext_resource type="Script" uid="uid://cdj2j4s0ruk6o" path="res://game/fishing_minigame/stage.gd" id="1_f74kx"]
 [ext_resource type="PackedScene" uid="uid://bbeqvpwpsfln7" path="res://game/fishing_minigame/fishing_minigame.tscn" id="3_tgqly"]
+[ext_resource type="AudioStream" uid="uid://bnxh31tpom5lv" path="res://assets/audio/music/main_theme.ogg" id="4_tgqly"]
+[ext_resource type="AudioStream" uid="uid://nn1hjyoga4lv" path="res://assets/audio/fx/fishing_noices/normal_line_1.wav" id="5_feoqn"]
+[ext_resource type="AudioStream" uid="uid://cvejsioh6fkxu" path="res://assets/audio/fx/fishing_noices/normal_line_2.wav" id="6_mddte"]
+[ext_resource type="AudioStream" uid="uid://dhco1pxggvxxe" path="res://assets/audio/fx/fishing_noices/normal_line_3.wav" id="7_a3oqo"]
+[ext_resource type="AudioStream" uid="uid://bcha3j6tvwsal" path="res://assets/audio/fx/fishing_noices/fast_line_1.wav" id="8_lwls3"]
+[ext_resource type="AudioStream" uid="uid://cfuhl24ipvoby" path="res://assets/audio/fx/fishing_noices/fast_line_2.wav" id="9_jugoj"]
+[ext_resource type="AudioStream" uid="uid://bpsv30jd0638w" path="res://assets/audio/fx/fishing_noices/fast_line_3.wav" id="10_djw4x"]
+[ext_resource type="AudioStream" uid="uid://dj6pt5q1bdtpo" path="res://assets/audio/fx/fishing_noices/splash_1.wav" id="11_o172d"]
+[ext_resource type="AudioStream" uid="uid://jnko0jsc1aa2" path="res://assets/audio/fx/fishing_noices/spash_2.wav" id="12_0st1p"]
+[ext_resource type="AudioStream" uid="uid://doh5w7cduvt18" path="res://assets/audio/fx/fishing_noices/splash_3.wav" id="13_6wvna"]
+[ext_resource type="AudioStream" uid="uid://cxs5hh8opxkmt" path="res://assets/audio/fx/fishing_noices/splash_4.wav" id="14_4lvjx"]
 
 [sub_resource type="Curve" id="Curve_f74kx"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5052265, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -301,6 +312,61 @@ states/wait/position = Vector2(500, 114)
 transitions = ["Start", "wait", SubResource("AnimationNodeStateMachineTransition_a3oqo"), "wait", "cast", SubResource("AnimationNodeStateMachineTransition_lwls3"), "cast", "idle", SubResource("AnimationNodeStateMachineTransition_jugoj"), "idle", "pull", SubResource("AnimationNodeStateMachineTransition_djw4x"), "pull", "idle", SubResource("AnimationNodeStateMachineTransition_81trd"), "idle", "wait", SubResource("AnimationNodeStateMachineTransition_f74kx")]
 graph_offset = Vector2(210, 113)
 
+[sub_resource type="Curve2D" id="Curve2D_o172d"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 584, 0, 33.296917, 0, -33.296917, 0, 536, -56, 26.287039, 0.35049385, -26.287039, -0.35049385, 480, -8, 33.997902, 2.102963, -33.997902, -2.102963, 416, -48, 23.833582, 2.803953, -23.833582, -2.803953, 352, 0, 39.605804, 4.2059293, -39.605804, -4.2059293, 280, -48, 0, 0, 0, 0, 184.00003, -23.99997)
+}
+point_count = 7
+
+[sub_resource type="Shader" id="Shader_riqys"]
+code = "shader_type canvas_item;
+
+uniform float wave_force: hint_range(0.0, 1.0, 0.1) = 1.0;
+uniform float waveness: hint_range(0.0, 50.0, 0.5) = 5.0;
+uniform float speed: hint_range(0.0, 20.0, 0.1) = 1.0;
+
+void vertex() {
+}
+
+void fragment() {
+	vec2 uv = UV;
+	uv.y += sin(TIME * speed + uv.x * waveness) * wave_force * 0.1;
+	COLOR = texture(TEXTURE, uv) * vec4(COLOR.rgb, 1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bhunq"]
+shader = SubResource("Shader_riqys")
+shader_parameter/wave_force = 1.0
+shader_parameter/waveness = 31.5
+shader_parameter/speed = 1.60000002384192
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o172d"]
+gradient = SubResource("Gradient_i5yc3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.90000004, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bhunq"]
+streams_count = 3
+stream_0/stream = ExtResource("5_feoqn")
+stream_1/stream = ExtResource("6_mddte")
+stream_2/stream = ExtResource("7_a3oqo")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_81trd"]
+streams_count = 3
+stream_0/stream = ExtResource("8_lwls3")
+stream_1/stream = ExtResource("9_jugoj")
+stream_2/stream = ExtResource("10_djw4x")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rgeny"]
+streams_count = 4
+stream_0/stream = ExtResource("11_o172d")
+stream_1/stream = ExtResource("12_0st1p")
+stream_2/stream = ExtResource("13_6wvna")
+stream_3/stream = ExtResource("14_4lvjx")
+
 [node name="Stage" type="Node2D" unique_id=987376960]
 script = ExtResource("1_f74kx")
 cast_curve = SubResource("Curve_f74kx")
@@ -316,7 +382,7 @@ polygon = PackedVector2Array(269, 320, 445, 328, 478, 412, 592, 460, 516, 581, 3
 
 [node name="Fosa" type="Polygon2D" parent="Fosa" unique_id=112399110]
 position = Vector2(0, 36)
-color = Color(0.10743686, 0.041772723, 0.001894691, 1)
+color = Color(0.27850002, 0.75, 0.135, 1)
 polygon = PackedVector2Array(269, 320, 434, 326, 466, 400, 592, 460, 516, 581, 338, 597, 211, 540, 100, 607, 25, 492, 76, 354, 214, 359)
 
 [node name="Mesa" type="Polygon2D" parent="." unique_id=1507726799]
@@ -448,7 +514,6 @@ vertical_alignment = 1
 unique_name_in_owner = true
 position = Vector2(656, 504)
 script = ExtResource("1_eijj6")
-test_pull = null
 
 [node name="Cuerpo" type="Sprite2D" parent="Igor" unique_id=1589526275]
 self_modulate = Color(0.54510003, 0.79, 0.58591664, 1)
@@ -492,6 +557,30 @@ tree_root = SubResource("AnimationNodeStateMachine_bhunq")
 anim_player = NodePath("../AnimationPlayer")
 parameters/conditions/pull = false
 
+[node name="FishingLine" type="Line2D" parent="Igor" unique_id=252232074]
+position = Vector2(656, -504)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+points = PackedVector2Array(464, 344, 128, 488)
+width = 1.0
+
+[node name="Path2D" type="Path2D" parent="." unique_id=1866000110]
+position = Vector2(656, 504)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+curve = SubResource("Curve2D_o172d")
+
+[node name="HookedPart" type="PathFollow2D" parent="Path2D" unique_id=787751811]
+position = Vector2(584, 0)
+rotation = -1.8275559
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/HookedPart" unique_id=2097779768]
+self_modulate = Color(0.15492907, 0.43313256, 0.0736405, 1)
+material = SubResource("ShaderMaterial_bhunq")
+position = Vector2(-7.9917603, -0.29937744)
+scale = Vector2(0.93301153, 0.60784096)
+texture = SubResource("GradientTexture2D_o172d")
+
 [node name="Cliente" type="Sprite2D" parent="." unique_id=931510773]
 modulate = Color(0.57, 0.5567, 0.4104, 1)
 clip_children = 2
@@ -531,3 +620,29 @@ offset_left = 160.0
 offset_top = 32.0
 offset_right = 480.0
 offset_bottom = 256.0
+speed_factor = 3.0
+
+[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=684811271]
+stream = ExtResource("4_tgqly")
+autoplay = true
+bus = &"music"
+
+[node name="CastLine" type="AudioStreamPlayer" parent="." unique_id=116178430]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_bhunq")
+
+[node name="Pull" type="AudioStreamPlayer" parent="." unique_id=1601305304]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_81trd")
+
+[node name="Reel" type="AudioStreamPlayer" parent="." unique_id=616597581]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_81trd")
+
+[node name="Splash" type="AudioStreamPlayer" parent="." unique_id=519020923]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_rgeny")
+
+[connection signal="line_casted" from="." to="CastLine" method="play"]
+[connection signal="reel_miss" from="FishingMinigame" to="Splash" method="play"]
+[connection signal="reeled" from="FishingMinigame" to="Pull" method="play"]

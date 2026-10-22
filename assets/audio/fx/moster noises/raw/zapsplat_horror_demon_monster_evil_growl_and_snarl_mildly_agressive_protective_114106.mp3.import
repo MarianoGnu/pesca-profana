@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cqa2dsdecx13w"
+path="res://.godot/imported/zapsplat_horror_demon_monster_evil_growl_and_snarl_mildly_agressive_protective_114106.mp3-06588e0fb3e2d1f96064363a3227e9d9.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/fx/moster noises/raw/zapsplat_horror_demon_monster_evil_growl_and_snarl_mildly_agressive_protective_114106.mp3"
+dest_files=["res://.godot/imported/zapsplat_horror_demon_monster_evil_growl_and_snarl_mildly_agressive_protective_114106.mp3-06588e0fb3e2d1f96064363a3227e9d9.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
