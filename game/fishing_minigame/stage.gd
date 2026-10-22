@@ -8,12 +8,16 @@ enum {
 }
 
 signal line_casted
+signal hooked
+signal good_catched
+signal bad_catched
 
 @export var cast_curve: Curve
 
 @onready var _fishing_minigame: FishingMinigame = %FishingMinigame
 @onready var _cast_progress: TextureProgressBar = %CastProgress
 @onready var _igor: Igor = %Igor
+@onready var _hooked_part: PathFollow2D = %HookedPart
 
 var _cast_time: float = 0:
 	set = _set_cast_time
@@ -23,7 +27,8 @@ var _state := -1:
 
 func _ready() -> void:
 	_state = STATE_WAITING
-	_fishing_minigame.reeled.connect(_igor.pull)
+	_fishing_minigame.reeled.connect(_on_fishing_minigame_reeled)
+	
 
 func _process(p_delta: float) -> void:
 	match _state:
@@ -61,4 +66,20 @@ func _on_enter_state(p_state: int) -> void:
 		STATE_FISHING:
 			_cast_progress.hide()
 			_fishing_minigame.set_state(FishingMinigame.STATE_HOOKED)
+			hooked.emit()
 #endregion SetGet
+
+#region SignalHandlers
+func _on_fishing_minigame_reeled() -> void:
+	var tw: Tween = _hooked_part.create_tween()
+	var advance = 0.1 # TODO Tweak depending on hooked part
+	tw.tween_property(_hooked_part, ^"progress_ratio", _hooked_part.progress_ratio + advance, 0.2)
+	await tw.finished
+	if _hooked_part.progress_ratio >= 1.0:
+		_fishing_minigame.set_process(false)
+		good_catched.emit()
+		await get_tree().create_timer(0.5).timeout
+		_fishing_minigame.set_process(true)
+		_state = STATE_WAITING
+		_igor.end_fishing()
+#endregion SignalHandlers
