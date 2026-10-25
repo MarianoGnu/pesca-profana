@@ -14,8 +14,12 @@ extends Node2D
 
 @onready var _playback: AnimationNodeStateMachinePlayback = $AnimationTree.get("parameters/playback")
 
+func _ready() -> void:
+	_playback.state_started.connect(print.bind(" (started)"))
+	_playback.state_finished.connect(print.bind(" (finished)"))
+
 func _validate_property(property: Dictionary) -> void:
-	if property.name in [&"casting", &"pull"]:
+	if property.name in [&"casting", &"test_pull", &"done"]:
 		property.usage = PROPERTY_USAGE_EDITOR
 
 func pull() -> void:

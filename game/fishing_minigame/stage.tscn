@@ -4,7 +4,9 @@
 [ext_resource type="Script" uid="uid://cdj2j4s0ruk6o" path="res://game/fishing_minigame/stage.gd" id="1_f74kx"]
 [ext_resource type="Script" uid="uid://d0gloleltgt26" path="res://game/fishing_minigame/night_progress_bar.gd" id="2_rgeny"]
 [ext_resource type="Script" uid="uid://yc2kpj5nflc0" path="res://game/fishing_minigame/fishing_line.gd" id="3_0st1p"]
+[ext_resource type="Script" uid="uid://ddnuthkbks3bj" path="res://game/fishing_minigame/tutorial.gd" id="3_m016g"]
 [ext_resource type="PackedScene" uid="uid://bbeqvpwpsfln7" path="res://game/fishing_minigame/fishing_minigame.tscn" id="3_tgqly"]
+[ext_resource type="Script" uid="uid://cs8kgb7gge2wq" path="res://systems/input_hint_label.gd" id="4_tpg2g"]
 [ext_resource type="AudioStream" uid="uid://cc43mm3yacrqq" path="res://assets/audio/music/game_theme.ogg" id="5_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://nn1hjyoga4lv" path="res://assets/audio/fx/fishing_noices/normal_line_1.wav" id="5_feoqn"]
 [ext_resource type="AudioStream" uid="uid://cvejsioh6fkxu" path="res://assets/audio/fx/fishing_noices/normal_line_2.wav" id="6_mddte"]
@@ -23,13 +25,33 @@
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5052265, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riqys"]
+bg_color = Color(0.5113334, 0, 0.59, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhunq"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_riqys"]
+action = &"action"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_bhunq"]
+events = [SubResource("InputEventAction_riqys")]
+
 [sub_resource type="Gradient" id="Gradient_f74kx"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_tgqly"]
 gradient = SubResource("Gradient_f74kx")
-width = 20
+width = 44
 height = 200
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
@@ -40,7 +62,7 @@ colors = PackedColorArray(0.18359044, 0.18359044, 0.18359044, 1, 0.5370113, 0.53
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_riqys"]
 gradient = SubResource("Gradient_eijj6")
-width = 20
+width = 44
 height = 200
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
@@ -314,7 +336,7 @@ states/pull/position = Vector2(615, 273)
 states/wait/node = SubResource("AnimationNodeAnimation_mddte")
 states/wait/position = Vector2(500, 114)
 transitions = ["Start", "wait", SubResource("AnimationNodeStateMachineTransition_a3oqo"), "wait", "cast", SubResource("AnimationNodeStateMachineTransition_lwls3"), "cast", "idle", SubResource("AnimationNodeStateMachineTransition_jugoj"), "idle", "pull", SubResource("AnimationNodeStateMachineTransition_djw4x"), "pull", "idle", SubResource("AnimationNodeStateMachineTransition_81trd"), "idle", "wait", SubResource("AnimationNodeStateMachineTransition_f74kx")]
-graph_offset = Vector2(210, 113)
+graph_offset = Vector2(246, 82)
 
 [sub_resource type="Curve2D" id="Curve2D_6wvna"]
 _data = {
@@ -405,7 +427,114 @@ grow_vertical = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="EndDayFade" type="ColorRect" parent="HUD" unique_id=795847263]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EndDayToaster" type="PanelContainer" parent="HUD/EndDayFade" unique_id=544228785]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.5
+offset_top = -39.5
+offset_right = 75.5
+offset_bottom = 39.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_riqys")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/EndDayFade/EndDayToaster" unique_id=303066173]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="HUD/EndDayFade/EndDayToaster/MarginContainer" unique_id=20924515]
+layout_mode = 2
+text = "NEXT NIGHT"
+
+[node name="Tutorial" type="ColorRect" parent="HUD" unique_id=1671514873]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+script = ExtResource("3_m016g")
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD/Tutorial" unique_id=1591887424]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -423.0
+offset_top = -81.0
+offset_right = 423.0
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_riqys")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/Tutorial/PanelContainer" unique_id=1311930622]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Tutorial/PanelContainer/MarginContainer" unique_id=121608864]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TabContainer" type="TabContainer" parent="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer" unique_id=559167084]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_bhunq")
+theme_override_styles/tabbar_background = SubResource("StyleBoxEmpty_bhunq")
+theme_override_styles/tab_unselected = SubResource("StyleBoxEmpty_bhunq")
+theme_override_styles/tab_hovered = SubResource("StyleBoxEmpty_bhunq")
+theme_override_styles/tab_selected = SubResource("StyleBoxEmpty_bhunq")
+theme_override_styles/tab_disabled = SubResource("StyleBoxEmpty_bhunq")
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_bhunq")
+current_tab = 0
+tabs_visible = false
+
+[node name="1" type="Label" parent="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer/TabContainer" unique_id=1968491210]
+layout_mode = 2
+text = "Igor has to pay student loans so he decided to open a small \"business\" finally become a mad scientist himself.
+
+Clients will start to ask for different things you conveniently hoarded over the years.
+
+Hold {action} to start fishing them, and then press {action} at the right moment to make it closer yo tou"
+horizontal_alignment = 1
+script = ExtResource("4_tpg2g")
+metadata/_custom_type_script = "uid://cs8kgb7gge2wq"
+metadata/_tab_index = 0
+
+[node name="EndTutorialButton" type="Button" parent="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer" unique_id=786781364]
+layout_mode = 2
+size_flags_horizontal = 4
+shortcut = SubResource("Shortcut_bhunq")
+shortcut_in_tooltip = false
+text = "Press {action} to continue"
+script = ExtResource("4_tpg2g")
+
 [node name="Tierra" type="Polygon2D" parent="." unique_id=436280313]
+position = Vector2(-24, 0)
 color = Color(0.5222752, 0.28873143, 0.025688825, 1)
 polygon = PackedVector2Array(-46, -20, 1219, -43, 1222, 676, -70, 665)
 
@@ -435,9 +564,9 @@ A
 
 [node name="CastProgress" type="TextureProgressBar" parent="." unique_id=1773966967]
 unique_name_in_owner = true
-offset_left = 592.0
+offset_left = 564.0
 offset_top = 312.0
-offset_right = 612.0
+offset_right = 608.0
 offset_bottom = 512.0
 max_value = 1.0
 step = 0.0
@@ -446,39 +575,66 @@ texture_under = SubResource("GradientTexture2D_tgqly")
 texture_progress = SubResource("GradientTexture2D_riqys")
 
 [node name="ColorRect" type="Panel" parent="CastProgress" unique_id=1237613967]
-self_modulate = Color(0.82, 0.3116, 0.7691598, 1)
+self_modulate = Color(0.82, 0.3116, 0.7691598, 0.49019608)
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.64
+anchor_top = 0.6
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -32.0
-offset_right = -8.0
+offset_left = 2.2888184e-05
+offset_right = -0.40000153
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="CastProgress/ColorRect" unique_id=1220955199]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "👁"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect3" type="Panel" parent="CastProgress" unique_id=1924082938]
-self_modulate = Color(0.32118574, 0.37454826, 0.7409843, 1)
+[node name="ColorRect2" type="Panel" parent="CastProgress" unique_id=1413587834]
+self_modulate = Color(0.1656, 0.5676401, 0.69, 0.49019608)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -1.2
+anchor_left = 1.1727272
+anchor_top = 0.22
+anchor_right = 1.1727272
+anchor_bottom = 0.6
+offset_left = -51.6
+offset_right = -8.000023
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="CastProgress/ColorRect2" unique_id=1889220259]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.599976
+grow_horizontal = 2
+grow_vertical = 2
+text = "👣"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect3" type="Panel" parent="CastProgress" unique_id=1924082938]
+self_modulate = Color(0.31820002, 0.37443995, 0.74, 0.49019608)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.74545455
 anchor_top = 0.4
-anchor_right = -1.2
+anchor_right = 0.74545455
 anchor_bottom = 0.76
-offset_left = -32.0
-offset_right = -8.0
+offset_left = -32.00001
+offset_right = -8.000015
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
@@ -496,11 +652,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ColorRect4" type="Panel" parent="CastProgress" unique_id=1529521569]
-self_modulate = Color(1, 0.01999998, 0.13433343, 1)
+self_modulate = Color(1, 0.01999998, 0.13433343, 0.49019608)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -1.2
-anchor_right = -1.2
+anchor_left = 0.74545455
+anchor_right = 0.75000024
 anchor_bottom = 0.36
 offset_left = -32.0
 offset_right = -8.0
@@ -520,32 +676,9 @@ text = "💀"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect2" type="Panel" parent="CastProgress" unique_id=1413587834]
-self_modulate = Color(0.16345757, 0.5694829, 0.6869392, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.22
-anchor_bottom = 0.6
-offset_left = -32.0
-offset_right = -8.0
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
-metadata/_edit_group_ = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="CastProgress/ColorRect2" unique_id=1889220259]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "👣"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Igor" type="Node2D" parent="." unique_id=101670147]
 unique_name_in_owner = true
+process_mode = 3
 position = Vector2(656, 504)
 script = ExtResource("1_eijj6")
 
@@ -696,6 +829,8 @@ stream = ExtResource("17_rgeny")
 [connection signal="hooked" from="." to="Path2D/HookedPart" method="set_progress_ratio" binds= [0.0]]
 [connection signal="line_casted" from="." to="CastLine" method="play"]
 [connection signal="night_ratio_changed" from="." to="HUD/NightProgressBar" method="_on_stage_night_ratio_changed"]
+[connection signal="night_started" from="." to="HUD/Tutorial" method="_on_stage_night_started"]
+[connection signal="pressed" from="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer/EndTutorialButton" to="HUD/Tutorial" method="_on_end_tutorial_button_pressed"]
 [connection signal="ready" from="Path2D/HookedPart" to="Path2D/HookedPart" method="hide"]
 [connection signal="reel_miss" from="FishingMinigame" to="Igor" method="pull"]
 [connection signal="reel_miss" from="FishingMinigame" to="Splash" method="play"]

@@ -1,5 +1,5 @@
 class_name InputHintLabel
-extends Label
+extends Control
 
 static var _keyboard_input: Dictionary[StringName, String]
 static var _joystick_input: Dictionary[StringName, String]
@@ -44,7 +44,8 @@ static func _static_init() -> void:
 				_joystick_input[action] = JOYMAP.get(event.button_index, "?")
 
 func _ready() -> void:
-	_translation_key = text
+	assert(&"text" in self)
+	_translation_key = self.text
 	_update_text()
 	EventBus.input_source_changed.connect(_update_text.unbind(1))
 
@@ -56,8 +57,8 @@ func _notification(what: int) -> void:
 
 func _update_text() -> void:
 	if EventBus.input_source == EventBus.InputSource.KEYBOARD:
-		text = tr(_translation_key).format(_keyboard_input)
+		self.text = tr(_translation_key).format(_keyboard_input)
 	else:
 		print(_joystick_input)
-		text = tr(_translation_key).format(_joystick_input)
+		self.text = tr(_translation_key).format(_joystick_input)
 	
