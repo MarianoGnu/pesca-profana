@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 enum {
 	STATE_BEFORE_OPEN_STORE,

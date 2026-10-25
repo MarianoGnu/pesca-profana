@@ -20,6 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://cxs5hh8opxkmt" path="res://assets/audio/fx/fishing_noices/splash_4.wav" id="14_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://dce1rfjppcdnp" path="res://assets/audio/fx/misc/fishing_right.wav" id="16_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://dpyppfwxwsy8w" path="res://assets/audio/fx/misc/fishing_wrong.wav" id="17_rgeny"]
+[ext_resource type="Texture2D" uid="uid://d2onkxthojlgu" path="res://assets/backgrounds/bg_stage.png" id="21_nyxl6"]
 
 [sub_resource type="Curve" id="Curve_f74kx"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5052265, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -346,9 +347,9 @@ point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_o172d"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 584, 0, 33.296917, 0, -33.296917, 0, 536, -56, 26.287039, 0.35049385, -26.287039, -0.35049385, 480, -8, 33.997902, 2.102963, -33.997902, -2.102963, 416, -48, 23.833582, 2.803953, -23.833582, -2.803953, 352, 0, 39.605804, 4.2059293, -39.605804, -4.2059293, 280, -48, 0, 0, 0, 0, 184.00003, -23.99997)
+"points": PackedVector2Array(0, 0, 0, 0, 584, 16.000122, 33.296917, 0, -33.296917, 0, 504, -23.999878, 33.997902, 2.102963, -33.997902, -2.102963, 407.99997, -7.999939, 23.833582, 2.803953, -23.833582, -2.803953, 359.99997, -47.99994, 39.605804, 4.2059293, -39.605804, -4.2059293, 255.99997, -15.999939, 0, 0, 0, 0, 168, -39.99994)
 }
-point_count = 7
+point_count = 6
 
 [sub_resource type="Shader" id="Shader_riqys"]
 code = "shader_type canvas_item;
@@ -396,9 +397,27 @@ stream_1/stream = ExtResource("12_0st1p")
 stream_2/stream = ExtResource("13_6wvna")
 stream_3/stream = ExtResource("14_4lvjx")
 
-[node name="Stage" type="Node2D" unique_id=987376960]
+[node name="Stage" type="Control" unique_id=1507039804]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_f74kx")
 cast_curve = SubResource("Curve_f74kx")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=7663207]
+self_modulate = Color(2.8165433, 2.8165433, 2.8165433, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_nyxl6")
+expand_mode = 2
+stretch_mode = 6
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1740022086]
 
@@ -465,7 +484,6 @@ layout_mode = 2
 text = "NEXT NIGHT"
 
 [node name="Tutorial" type="ColorRect" parent="HUD" unique_id=1671514873]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -476,14 +494,14 @@ script = ExtResource("3_m016g")
 
 [node name="PanelContainer" type="PanelContainer" parent="HUD/Tutorial" unique_id=1591887424]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = -1
+anchor_left = 0.11100001
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 0.88900006
 anchor_bottom = 0.5
-offset_left = -423.0
+offset_left = 25.12799
 offset_top = -81.0
-offset_right = 423.0
+offset_right = -25.128052
 offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -515,12 +533,9 @@ tabs_visible = false
 
 [node name="1" type="Label" parent="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer/TabContainer" unique_id=1968491210]
 layout_mode = 2
-text = "Igor has to pay student loans so he decided to open a small \"business\" finally become a mad scientist himself.
-
-Clients will start to ask for different things you conveniently hoarded over the years.
-
-Hold {action} to start fishing them, and then press {action} at the right moment to make it closer yo tou"
+text = "TUTORIAL_NIGHT_1"
 horizontal_alignment = 1
+autowrap_mode = 2
 script = ExtResource("4_tpg2g")
 metadata/_custom_type_script = "uid://cs8kgb7gge2wq"
 metadata/_tab_index = 0
@@ -532,21 +547,6 @@ shortcut = SubResource("Shortcut_bhunq")
 shortcut_in_tooltip = false
 text = "Press {action} to continue"
 script = ExtResource("4_tpg2g")
-
-[node name="Tierra" type="Polygon2D" parent="." unique_id=436280313]
-position = Vector2(-24, 0)
-color = Color(0.5222752, 0.28873143, 0.025688825, 1)
-polygon = PackedVector2Array(-46, -20, 1219, -43, 1222, 676, -70, 665)
-
-[node name="Fosa" type="Polygon2D" parent="." unique_id=2070891285]
-clip_children = 2
-color = Color(0.2954147, 0.15402547, 0.011444795, 1)
-polygon = PackedVector2Array(269, 320, 445, 328, 478, 412, 592, 460, 516, 581, 338, 597, 211, 540, 100, 607, 25, 492, 63, 350, 214, 359)
-
-[node name="Fosa" type="Polygon2D" parent="Fosa" unique_id=112399110]
-position = Vector2(0, 36)
-color = Color(0.27850002, 0.75, 0.135, 1)
-polygon = PackedVector2Array(269, 320, 434, 326, 466, 400, 592, 460, 516, 581, 338, 597, 211, 540, 100, 607, 25, 492, 76, 354, 214, 359)
 
 [node name="Mesa" type="Polygon2D" parent="." unique_id=1507726799]
 position = Vector2(728, 408)
@@ -564,6 +564,7 @@ A
 
 [node name="CastProgress" type="TextureProgressBar" parent="." unique_id=1773966967]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 564.0
 offset_top = 312.0
 offset_right = 608.0
@@ -737,16 +738,16 @@ points = PackedVector2Array(592, 352, 590.324, 355.55768, 587.992, 359.1139, 585
 width = 1.0
 
 [node name="Path2D" type="Path2D" parent="." unique_id=1866000110]
-position = Vector2(656, 504)
-rotation = 3.1415927
+position = Vector2(688, 560)
+rotation = -3.1415925
 scale = Vector2(1, -1)
 curve = SubResource("Curve2D_o172d")
 
 [node name="HookedPart" type="PathFollow2D" parent="Path2D" unique_id=787751811]
 unique_name_in_owner = true
 visible = false
-position = Vector2(584, 0)
-rotation = -1.8275559
+position = Vector2(584, 16.000122)
+rotation = -2.4333515
 cubic_interp = false
 loop = false
 
@@ -792,10 +793,11 @@ polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666
 
 [node name="FishingMinigame" parent="." unique_id=1643019011 instance=ExtResource("3_tgqly")]
 unique_name_in_owner = true
-offset_left = 160.0
-offset_top = 32.0
-offset_right = 480.0
-offset_bottom = 256.0
+layout_mode = 1
+offset_left = 48.0
+offset_top = 24.0
+offset_right = -768.0
+offset_bottom = -328.0
 speed_factor = 3.0
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=684811271]

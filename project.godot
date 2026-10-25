@@ -61,6 +61,10 @@ action={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://game/localization/localization.en.translation", "res://game/localization/localization.es.translation")
+
 [layer_names]
 
 2d_render/layer_2="Tutorials"
