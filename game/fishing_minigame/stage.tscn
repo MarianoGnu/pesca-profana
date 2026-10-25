@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cdj2j4s0ruk6o" path="res://game/fishing_minigame/stage.gd" id="1_f74kx"]
 [ext_resource type="Script" uid="uid://yc2kpj5nflc0" path="res://game/fishing_minigame/fishing_line.gd" id="3_0st1p"]
 [ext_resource type="PackedScene" uid="uid://bbeqvpwpsfln7" path="res://game/fishing_minigame/fishing_minigame.tscn" id="3_tgqly"]
-[ext_resource type="AudioStream" uid="uid://bnxh31tpom5lv" path="res://assets/audio/music/main_theme.ogg" id="4_tgqly"]
+[ext_resource type="AudioStream" uid="uid://cc43mm3yacrqq" path="res://assets/audio/music/game_theme.ogg" id="5_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://nn1hjyoga4lv" path="res://assets/audio/fx/fishing_noices/normal_line_1.wav" id="5_feoqn"]
 [ext_resource type="AudioStream" uid="uid://cvejsioh6fkxu" path="res://assets/audio/fx/fishing_noices/normal_line_2.wav" id="6_mddte"]
 [ext_resource type="AudioStream" uid="uid://dhco1pxggvxxe" path="res://assets/audio/fx/fishing_noices/normal_line_3.wav" id="7_a3oqo"]
@@ -583,6 +583,7 @@ curve = SubResource("Curve2D_o172d")
 
 [node name="HookedPart" type="PathFollow2D" parent="Path2D" unique_id=787751811]
 unique_name_in_owner = true
+visible = false
 position = Vector2(584, 0)
 rotation = -1.8275559
 cubic_interp = false
@@ -637,7 +638,7 @@ offset_bottom = 256.0
 speed_factor = 3.0
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=684811271]
-stream = ExtResource("4_tgqly")
+stream = ExtResource("5_4lvjx")
 autoplay = true
 bus = &"music"
 
