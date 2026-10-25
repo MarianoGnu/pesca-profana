@@ -21,6 +21,13 @@
 [ext_resource type="AudioStream" uid="uid://dce1rfjppcdnp" path="res://assets/audio/fx/misc/fishing_right.wav" id="16_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://dpyppfwxwsy8w" path="res://assets/audio/fx/misc/fishing_wrong.wav" id="17_rgeny"]
 [ext_resource type="Texture2D" uid="uid://d2onkxthojlgu" path="res://assets/backgrounds/bg_stage.png" id="21_nyxl6"]
+[ext_resource type="AudioStream" uid="uid://bi4o1mc5k0rn5" path="res://assets/audio/fx/moster noises/monster_roar_1.wav" id="22_thvba"]
+[ext_resource type="AudioStream" uid="uid://brqy5f3jwfq02" path="res://assets/audio/fx/moster noises/monster_roar_2.wav" id="23_f4op1"]
+[ext_resource type="AudioStream" uid="uid://clk1l1vu28q1t" path="res://assets/audio/fx/moster noises/monster_roar_3.wav" id="24_3nvyc"]
+[ext_resource type="AudioStream" uid="uid://ca4w33jbs1epx" path="res://assets/audio/fx/moster noises/monster_roar_4.wav" id="25_jie06"]
+[ext_resource type="AudioStream" uid="uid://b5yrrb8mjgqyu" path="res://assets/audio/fx/moster noises/monster_roar_5.wav" id="26_h5ifc"]
+[ext_resource type="AudioStream" uid="uid://bqej0iv40yie8" path="res://assets/audio/fx/moster noises/monster_roar_6.wav" id="27_2mbeq"]
+[ext_resource type="Script" uid="uid://c7l57jl3x7uoo" path="res://game/fishing_minigame/monster_roar.gd" id="28_f4op1"]
 
 [sub_resource type="Curve" id="Curve_f74kx"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5052265, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -396,6 +403,15 @@ stream_0/stream = ExtResource("11_o172d")
 stream_1/stream = ExtResource("12_0st1p")
 stream_2/stream = ExtResource("13_6wvna")
 stream_3/stream = ExtResource("14_4lvjx")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_riqys"]
+streams_count = 6
+stream_0/stream = ExtResource("22_thvba")
+stream_1/stream = ExtResource("23_f4op1")
+stream_2/stream = ExtResource("24_3nvyc")
+stream_3/stream = ExtResource("25_jie06")
+stream_4/stream = ExtResource("26_h5ifc")
+stream_5/stream = ExtResource("27_2mbeq")
 
 [node name="Stage" type="Control" unique_id=1507039804]
 layout_mode = 3
@@ -801,27 +817,39 @@ offset_bottom = -328.0
 speed_factor = 3.0
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=684811271]
+process_mode = 3
 stream = ExtResource("5_4lvjx")
 autoplay = true
 bus = &"music"
 
 [node name="CastLine" type="AudioStreamPlayer" parent="." unique_id=116178430]
+process_mode = 3
 stream = SubResource("AudioStreamRandomizer_bhunq")
 
 [node name="Pull" type="AudioStreamPlayer" parent="." unique_id=1601305304]
+process_mode = 3
 stream = SubResource("AudioStreamRandomizer_81trd")
 
 [node name="Reel" type="AudioStreamPlayer" parent="." unique_id=616597581]
+process_mode = 3
 stream = SubResource("AudioStreamRandomizer_81trd")
 
 [node name="Splash" type="AudioStreamPlayer" parent="." unique_id=519020923]
+process_mode = 3
 stream = SubResource("AudioStreamRandomizer_rgeny")
 
 [node name="GoodCatch" type="AudioStreamPlayer" parent="." unique_id=80554876]
+process_mode = 3
 stream = ExtResource("16_4lvjx")
 
 [node name="BadCatch" type="AudioStreamPlayer" parent="." unique_id=990486756]
+process_mode = 3
 stream = ExtResource("17_rgeny")
+
+[node name="MonsterRoar" type="AudioStreamPlayer" parent="." unique_id=375206335]
+process_mode = 3
+stream = SubResource("AudioStreamRandomizer_riqys")
+script = ExtResource("28_f4op1")
 
 [connection signal="bad_catched" from="." to="Path2D/HookedPart" method="hide"]
 [connection signal="bad_catched" from="." to="BadCatch" method="play"]
@@ -836,5 +864,6 @@ stream = ExtResource("17_rgeny")
 [connection signal="ready" from="Path2D/HookedPart" to="Path2D/HookedPart" method="hide"]
 [connection signal="reel_miss" from="FishingMinigame" to="Igor" method="pull"]
 [connection signal="reel_miss" from="FishingMinigame" to="Splash" method="play"]
+[connection signal="reel_miss" from="FishingMinigame" to="MonsterRoar" method="play_roar"]
 [connection signal="reeled" from="FishingMinigame" to="Igor" method="pull"]
 [connection signal="reeled" from="FishingMinigame" to="Pull" method="play"]

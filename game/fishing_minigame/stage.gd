@@ -85,7 +85,7 @@ func _on_enter_state(p_state: int) -> void:
 			_night_progress = 0.0
 			night_ratio_changed.emit(0)
 			night_started.emit(_night)
-			_state = STATE_WAITING
+			_on_enter_state(STATE_WAITING)
 		STATE_WAITING:
 			_cast_progress.hide()
 			_fishing_minigame.set_state(FishingMinigame.STATE_UNSTARTED)
@@ -115,7 +115,7 @@ func _on_enter_state(p_state: int) -> void:
 			tw.tween_callback(_end_day_toaster.hide)
 			tw.tween_callback(_end_day_fade.hide)
 			await tw.finished
-			_state = STATE_BEFORE_OPEN_STORE
+			_on_enter_state(STATE_BEFORE_OPEN_STORE)
 #endregion SetGet
 
 #region SignalHandlers
