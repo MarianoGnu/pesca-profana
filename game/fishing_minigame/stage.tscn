@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://h58albkajyqf" path="res://game/fishing_minigame/igor.gd" id="1_eijj6"]
 [ext_resource type="Script" uid="uid://cdj2j4s0ruk6o" path="res://game/fishing_minigame/stage.gd" id="1_f74kx"]
+[ext_resource type="Script" uid="uid://d0gloleltgt26" path="res://game/fishing_minigame/night_progress_bar.gd" id="2_rgeny"]
 [ext_resource type="Script" uid="uid://yc2kpj5nflc0" path="res://game/fishing_minigame/fishing_line.gd" id="3_0st1p"]
 [ext_resource type="PackedScene" uid="uid://bbeqvpwpsfln7" path="res://game/fishing_minigame/fishing_minigame.tscn" id="3_tgqly"]
 [ext_resource type="AudioStream" uid="uid://cc43mm3yacrqq" path="res://assets/audio/music/game_theme.ogg" id="5_4lvjx"]
@@ -377,6 +378,33 @@ stream_3/stream = ExtResource("14_4lvjx")
 script = ExtResource("1_f74kx")
 cast_curve = SubResource("Curve_f74kx")
 
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1740022086]
+
+[node name="NightProgressBar" type="ProgressBar" parent="HUD" unique_id=250774093]
+unique_name_in_owner = true
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 1.0
+step = 0.028
+value = 1.0
+show_percentage = false
+script = ExtResource("2_rgeny")
+
+[node name="Label" type="Label" parent="HUD/NightProgressBar" unique_id=1174462816]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Tierra" type="Polygon2D" parent="." unique_id=436280313]
 color = Color(0.5222752, 0.28873143, 0.025688825, 1)
 polygon = PackedVector2Array(-46, -20, 1219, -43, 1222, 676, -70, 665)
@@ -667,6 +695,7 @@ stream = ExtResource("17_rgeny")
 [connection signal="hooked" from="." to="Path2D/HookedPart" method="show"]
 [connection signal="hooked" from="." to="Path2D/HookedPart" method="set_progress_ratio" binds= [0.0]]
 [connection signal="line_casted" from="." to="CastLine" method="play"]
+[connection signal="night_ratio_changed" from="." to="HUD/NightProgressBar" method="_on_stage_night_ratio_changed"]
 [connection signal="ready" from="Path2D/HookedPart" to="Path2D/HookedPart" method="hide"]
 [connection signal="reel_miss" from="FishingMinigame" to="Igor" method="pull"]
 [connection signal="reel_miss" from="FishingMinigame" to="Splash" method="play"]
