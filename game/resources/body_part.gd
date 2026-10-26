@@ -11,6 +11,7 @@ enum Type {
 	ARM_R,
 	LEG_L,
 	LEG_R,
+	EYES,
 	UNDEFINED,
 }
 
@@ -61,6 +62,7 @@ func _to_string() -> String:
 		Type.ARM_R : "👉🏻",
 		Type.LEG_L : "🦶",
 		Type.LEG_R : "👞",
+		Type.EYES : "👀",
 	}
 	const GENDERS = {
 		Gender.MASCULINE : "♂️",

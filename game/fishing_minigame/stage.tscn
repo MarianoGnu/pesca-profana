@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://nn1hjyoga4lv" path="res://assets/audio/fx/fishing_noices/normal_line_1.wav" id="5_feoqn"]
 [ext_resource type="AudioStream" uid="uid://cvejsioh6fkxu" path="res://assets/audio/fx/fishing_noices/normal_line_2.wav" id="6_mddte"]
 [ext_resource type="AudioStream" uid="uid://dhco1pxggvxxe" path="res://assets/audio/fx/fishing_noices/normal_line_3.wav" id="7_a3oqo"]
+[ext_resource type="PackedScene" uid="uid://dgrxpiet1h5x0" path="res://game/fishing_minigame/client.tscn" id="8_3nvyc"]
 [ext_resource type="AudioStream" uid="uid://bcha3j6tvwsal" path="res://assets/audio/fx/fishing_noices/fast_line_1.wav" id="8_lwls3"]
 [ext_resource type="AudioStream" uid="uid://cfuhl24ipvoby" path="res://assets/audio/fx/fishing_noices/fast_line_2.wav" id="9_jugoj"]
 [ext_resource type="AudioStream" uid="uid://bpsv30jd0638w" path="res://assets/audio/fx/fishing_noices/fast_line_3.wav" id="10_djw4x"]
@@ -774,38 +775,19 @@ position = Vector2(-7.9917603, -0.29937744)
 scale = Vector2(0.93301153, 0.60784096)
 texture = SubResource("GradientTexture2D_o172d")
 
-[node name="Cliente" type="Sprite2D" parent="." unique_id=931510773]
-modulate = Color(0.57, 0.5567, 0.4104, 1)
-clip_children = 2
+[node name="ClientSlot1" type="Node2D" parent="." unique_id=603142463]
 position = Vector2(903.99994, 504)
-scale = Vector2(1.7499976, 2.25)
-texture = SubResource("GradientTexture2D_bhunq")
 
-[node name="Pantalones" type="Polygon2D" parent="Cliente" unique_id=1886534612]
-color = Color(0.39, 0.39, 0.39, 1)
-polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
-
-[node name="Cliente2" type="Sprite2D" parent="." unique_id=1697724395]
-modulate = Color(0.57, 0.5567, 0.4104, 1)
-clip_children = 2
+[node name="ClientSlot2" type="Node2D" parent="." unique_id=1642648180]
 position = Vector2(1015.9999, 504)
-scale = Vector2(1.7499976, 2.25)
-texture = SubResource("GradientTexture2D_bhunq")
 
-[node name="Pantalones" type="Polygon2D" parent="Cliente2" unique_id=840279091]
-color = Color(0.39, 0.39, 0.39, 1)
-polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
-
-[node name="Cliente3" type="Sprite2D" parent="." unique_id=1663765819]
-modulate = Color(0.57, 0.5567, 0.4104, 1)
-clip_children = 2
+[node name="ClientSlot3" type="Node2D" parent="." unique_id=1228196070]
 position = Vector2(1128, 504)
-scale = Vector2(1.7499976, 2.25)
-texture = SubResource("GradientTexture2D_bhunq")
 
-[node name="Pantalones" type="Polygon2D" parent="Cliente3" unique_id=1520618214]
-color = Color(0.39, 0.39, 0.39, 1)
-polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
+[node name="ClientSpawn" type="Node2D" parent="." unique_id=1407665597]
+position = Vector2(1344, 505)
+
+[node name="Cliente" parent="ClientSpawn" unique_id=1047316955 instance=ExtResource("8_3nvyc")]
 
 [node name="FishingMinigame" parent="." unique_id=1643019011 instance=ExtResource("3_tgqly")]
 unique_name_in_owner = true

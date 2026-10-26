@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://dgrxpiet1h5x0"]
+
+[ext_resource type="Script" uid="uid://x7wm0jhidwrd" path="res://game/fishing_minigame/client.gd" id="1_ughtl"]
+[ext_resource type="PackedScene" uid="uid://cb0sgd18w5jpr" path="res://game/fishing_minigame/request_bubble.tscn" id="2_3xxwo"]
+
+[sub_resource type="Gradient" id="Gradient_i5yc3"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bhunq"]
+gradient = SubResource("Gradient_i5yc3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="GDScript" id="GDScript_ughtl"]
+script/source = "@tool
+extends CanvasGroup
+
+@export var _pupils: Array[Node2D]
+@export_range(0.0, 50.0, 1.0) var _rand_radius: float
+
+var _timer: Timer
+func _ready() -> void:
+	_timer = Timer.new()
+	add_child(_timer)
+	_timer.one_shot = false
+	_timer.timeout.connect(_randomize_pupils)
+	_timer.start(0.5)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _randomize_pupils() -> void:
+	for p: Node2D in _pupils:
+		p.position = Vector2.RIGHT.rotated(2 * PI * randf()) * _rand_radius
+"
+
+[node name="Client" type="Node2D" unique_id=1047316955 node_paths=PackedStringArray("_request_bubble", "_body_part_nodes")]
+script = ExtResource("1_ughtl")
+_request_bubble = NodePath("RequestBubble")
+_body_part_nodes = {
+0: NodePath("Body/Head"),
+1: NodePath("Body/Torso"),
+2: NodePath("Body/LArm"),
+3: NodePath("Body/RArm"),
+4: NodePath("Body/LLeg"),
+5: NodePath("Body/RLeg"),
+6: NodePath("Eyes")
+}
+
+[node name="RequestBubble" parent="." unique_id=704258933 instance=ExtResource("2_3xxwo")]
+
+[node name="Body" type="Node2D" parent="." unique_id=594290328]
+modulate = Color(0.5686275, 0.5568628, 0.4117647, 1)
+scale = Vector2(0.5, 1)
+
+[node name="Torso" type="Sprite2D" parent="Body" unique_id=586505432]
+scale = Vector2(1.7499976, 2.25)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Body/Torso" unique_id=1011261201]
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-32.000046, 7.111111, 32.000046, 7.111111, 18.28574, 32, -18.28574, 32)
+
+[node name="LLeg" type="Polygon2D" parent="Body" unique_id=1710791891]
+unique_name_in_owner = true
+scale = Vector2(1.7499976, 2.25)
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-32.000046, 53.333332, -32.000046, 7.111111, -9.14287, 32, -13.714305, 53.333332)
+
+[node name="RLeg" type="Polygon2D" parent="Body" unique_id=277172933]
+unique_name_in_owner = true
+rotation = 3.1415927
+scale = Vector2(1.7499976, -2.25)
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-32.000046, 53.333332, -32.000046, 7.111111, -9.14287, 32, -13.714305, 53.333332)
+
+[node name="LArm" type="Polygon2D" parent="Body" unique_id=597736367]
+unique_name_in_owner = true
+scale = Vector2(1.7499976, 2.25)
+polygon = PackedVector2Array(-18.28574, -17.777779, -22.857174, -10.666667, -36.57148, -7.111111, -41.142914, 14.222222, -54.85722, 10.666667, -50.285786, -14.222222, -32.000046, -24.88889, -18.28574, -24.88889)
+
+[node name="RArm" type="Polygon2D" parent="Body" unique_id=131336828]
+unique_name_in_owner = true
+rotation = 3.1415927
+scale = Vector2(1.7499976, -2.25)
+polygon = PackedVector2Array(-18.28574, -17.777779, -22.857174, -10.666667, -36.57148, -7.111111, -41.142914, 14.222222, -54.85722, 10.666667, -50.285786, -14.222222, -32.000046, -24.88889, -18.28574, -24.88889)
+
+[node name="Head" type="Sprite2D" parent="Body" unique_id=892886166]
+unique_name_in_owner = true
+position = Vector2(0, -80)
+scale = Vector2(1, 1.0000001)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Eyes" type="CanvasGroup" parent="." unique_id=1366588330 node_paths=PackedStringArray("_pupils")]
+unique_name_in_owner = true
+script = SubResource("GDScript_ughtl")
+_pupils = [NodePath("Sprite2D/Sprite2D2"), NodePath("Sprite2D2/Sprite2D2")]
+_rand_radius = 12.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Eyes" unique_id=889753857]
+position = Vector2(-16, -96)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Eyes/Sprite2D" unique_id=1664551489]
+self_modulate = Color(0.008202022, 0.008202025, 0.008202025, 1)
+position = Vector2(-11.186956, -4.3418894)
+scale = Vector2(0.5, 0.5)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Eyes" unique_id=1705375496]
+position = Vector2(8, -96)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Eyes/Sprite2D2" unique_id=1633194851]
+self_modulate = Color(0.008202022, 0.008202025, 0.008202025, 1)
+position = Vector2(9.343864, 7.529422)
+scale = Vector2(0.5, 0.5)
+texture = SubResource("GradientTexture2D_bhunq")
