@@ -3,6 +3,10 @@
 class_name Client
 extends Node2D
 
+var slot: Node2D:
+	set = _set_slot
+var patience: float:
+	set = _set_patience, get = _get_patience
 
 @export_group("Part Completion")
 @export var has_head: bool = true:
@@ -26,6 +30,7 @@ extends Node2D
 
 @export_group("Scene Setup", "_")
 @export var _request_bubble: RequestBubble
+@export var _patience_bar: ProgressBar
 @export var _body_part_nodes: Dictionary[BodyPart.Type, Node2D] = {
 	BodyPart.Type.HEAD  : null,
 	BodyPart.Type.TORSO : null,
@@ -46,6 +51,24 @@ var _has_part: Dictionary[BodyPart.Type, bool] = {
 	BodyPart.Type.EYES : true,
 }
 
+var _leaving: bool = false
+
+func setup(max_patience: float, missing_parts_count: int) -> void:
+	_patience_bar.max_value = max_patience
+	_patience_bar.value = max_patience
+	_patience_bar.min_value = 0
+	var removable: Array[BodyPart.Type]
+	for part: BodyPart.Type in _body_part_nodes.keys():
+		if _body_part_nodes.get(part, null) == null:
+			continue
+		removable.append(part)
+	removable.shuffle()
+	for i in missing_parts_count:
+		if removable.is_empty():
+			return
+		var type = removable.pop_back()
+		_set_has_part(type, false)
+
 func _set_has_part(p_type: BodyPart.Type, p_has_part: bool) -> void:
 	_has_part[p_type] = p_has_part
 	if not is_node_ready(): await ready
@@ -54,7 +77,39 @@ func _set_has_part(p_type: BodyPart.Type, p_has_part: bool) -> void:
 	_request_bubble.update(self)
 
 func _ready() -> void:
+	assert(_request_bubble != null)
+	assert(_patience_bar != null)
 	# TODO: Delete me when we have real assets
 	if Engine.is_editor_hint(): return
 	var color := Color.from_hsv(randf(), randf_range(0.3, 0.7), randf_range(0.5, 1.0))
 	$Body.modulate = color
+
+func queue_leave() -> void:
+	_leaving = true
+	_request_bubble.queue_free()
+
+#region SetGet
+func _set_slot(p_slot: Node2D):
+	slot = p_slot
+	var distance = global_position.distance_to(slot.global_position)
+	if is_zero_approx(distance): return
+	const MOVE_SPEED = 200.0
+	var move_time: float = distance / MOVE_SPEED
+	var tw: Tween = create_tween()
+	tw.tween_property(self, ^"global_position", slot.global_position, move_time)
+	if _leaving:
+		await tw.finished
+		queue_free()
+
+
+func _set_patience(p_value: float) -> void:
+	if !is_node_ready(): await ready
+	_patience_bar.value = p_value
+	patience = _patience_bar.value
+
+
+func _get_patience() -> float:
+	if !is_node_ready():
+		return patience
+	return _patience_bar.value
+#endregion SetGet

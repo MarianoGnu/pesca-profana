@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://h58albkajyqf" path="res://game/fishing_minigame/igor.gd" id="1_eijj6"]
 [ext_resource type="Script" uid="uid://cdj2j4s0ruk6o" path="res://game/fishing_minigame/stage.gd" id="1_f74kx"]
+[ext_resource type="Script" uid="uid://dutb7y2vdtorw" path="res://game/resources/stage_config.gd" id="2_3nvyc"]
 [ext_resource type="Script" uid="uid://d0gloleltgt26" path="res://game/fishing_minigame/night_progress_bar.gd" id="2_rgeny"]
 [ext_resource type="Script" uid="uid://yc2kpj5nflc0" path="res://game/fishing_minigame/fishing_line.gd" id="3_0st1p"]
 [ext_resource type="Script" uid="uid://ddnuthkbks3bj" path="res://game/fishing_minigame/tutorial.gd" id="3_m016g"]
@@ -11,7 +12,6 @@
 [ext_resource type="AudioStream" uid="uid://nn1hjyoga4lv" path="res://assets/audio/fx/fishing_noices/normal_line_1.wav" id="5_feoqn"]
 [ext_resource type="AudioStream" uid="uid://cvejsioh6fkxu" path="res://assets/audio/fx/fishing_noices/normal_line_2.wav" id="6_mddte"]
 [ext_resource type="AudioStream" uid="uid://dhco1pxggvxxe" path="res://assets/audio/fx/fishing_noices/normal_line_3.wav" id="7_a3oqo"]
-[ext_resource type="PackedScene" uid="uid://dgrxpiet1h5x0" path="res://game/fishing_minigame/client.tscn" id="8_3nvyc"]
 [ext_resource type="AudioStream" uid="uid://bcha3j6tvwsal" path="res://assets/audio/fx/fishing_noices/fast_line_1.wav" id="8_lwls3"]
 [ext_resource type="AudioStream" uid="uid://cfuhl24ipvoby" path="res://assets/audio/fx/fishing_noices/fast_line_2.wav" id="9_jugoj"]
 [ext_resource type="AudioStream" uid="uid://bpsv30jd0638w" path="res://assets/audio/fx/fishing_noices/fast_line_3.wav" id="10_djw4x"]
@@ -33,6 +33,10 @@
 [sub_resource type="Curve" id="Curve_f74kx"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5052265, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
+
+[sub_resource type="Resource" id="Resource_f4op1"]
+script = ExtResource("2_3nvyc")
+metadata/_custom_type_script = "uid://dutb7y2vdtorw"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riqys"]
 bg_color = Color(0.5113334, 0, 0.59, 1)
@@ -423,6 +427,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f74kx")
 cast_curve = SubResource("Curve_f74kx")
+config = Dictionary[int, ExtResource("2_3nvyc")]({
+1: SubResource("Resource_f4op1")
+})
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=7663207]
 self_modulate = Color(2.8165433, 2.8165433, 2.8165433, 1)
@@ -775,19 +782,25 @@ position = Vector2(-7.9917603, -0.29937744)
 scale = Vector2(0.93301153, 0.60784096)
 texture = SubResource("GradientTexture2D_o172d")
 
+[node name="NewClientTimer" type="Timer" parent="Path2D" unique_id=836265551]
+unique_name_in_owner = true
+autostart = true
+
 [node name="ClientSlot1" type="Node2D" parent="." unique_id=603142463]
+unique_name_in_owner = true
 position = Vector2(903.99994, 504)
 
 [node name="ClientSlot2" type="Node2D" parent="." unique_id=1642648180]
+unique_name_in_owner = true
 position = Vector2(1015.9999, 504)
 
 [node name="ClientSlot3" type="Node2D" parent="." unique_id=1228196070]
+unique_name_in_owner = true
 position = Vector2(1128, 504)
 
 [node name="ClientSpawn" type="Node2D" parent="." unique_id=1407665597]
+unique_name_in_owner = true
 position = Vector2(1344, 505)
-
-[node name="Cliente" parent="ClientSpawn" unique_id=1047316955 instance=ExtResource("8_3nvyc")]
 
 [node name="FishingMinigame" parent="." unique_id=1643019011 instance=ExtResource("3_tgqly")]
 unique_name_in_owner = true
@@ -844,6 +857,7 @@ script = ExtResource("28_f4op1")
 [connection signal="night_started" from="." to="HUD/Tutorial" method="_on_stage_night_started"]
 [connection signal="pressed" from="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer/EndTutorialButton" to="HUD/Tutorial" method="_on_end_tutorial_button_pressed"]
 [connection signal="ready" from="Path2D/HookedPart" to="Path2D/HookedPart" method="hide"]
+[connection signal="timeout" from="Path2D/NewClientTimer" to="." method="_on_new_client_timer_timeout"]
 [connection signal="reel_miss" from="FishingMinigame" to="Igor" method="pull"]
 [connection signal="reel_miss" from="FishingMinigame" to="Splash" method="play"]
 [connection signal="reel_miss" from="FishingMinigame" to="MonsterRoar" method="play_roar"]

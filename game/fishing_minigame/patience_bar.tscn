@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://bk6aatn83emy5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhunq"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3xxwo"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+
+[sub_resource type="GDScript" id="GDScript_fvhbl"]
+script/source = "@tool
+extends ProgressBar
+
+@export var gradient: Gradient
+
+
+func _on_value_changed(_value: float) -> void:
+	if !is_node_ready(): await ready
+	if gradient == null: return
+	self_modulate = gradient.sample(ratio)
+"
+
+[sub_resource type="Gradient" id="Gradient_fvhbl"]
+offsets = PackedFloat32Array(0, 0.22247706, 0.3646789, 0.7178899)
+colors = PackedColorArray(0.9047618, 0, 0.046026662, 1, 0.92, 0.7613, 0.2852, 1, 0.89786315, 0.76021475, 0.27955776, 1, 0.38871545, 0.73525274, 0.14978603, 1)
+
+[node name="PatienceBar" type="ProgressBar" unique_id=2046210911]
+offset_left = -52.0
+offset_top = -118.0
+offset_right = 55.0
+offset_bottom = -112.0
+theme_override_styles/background = SubResource("StyleBoxFlat_bhunq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3xxwo")
+max_value = 10.0
+step = 0.0
+value = 7.085
+show_percentage = false
+script = SubResource("GDScript_fvhbl")
+gradient = SubResource("Gradient_fvhbl")
+
+[connection signal="value_changed" from="." to="." method="_on_value_changed"]

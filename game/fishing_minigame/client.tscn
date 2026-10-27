@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://x7wm0jhidwrd" path="res://game/fishing_minigame/client.gd" id="1_ughtl"]
 [ext_resource type="PackedScene" uid="uid://cb0sgd18w5jpr" path="res://game/fishing_minigame/request_bubble.tscn" id="2_3xxwo"]
+[ext_resource type="PackedScene" uid="uid://bk6aatn83emy5" path="res://game/fishing_minigame/patience_bar.tscn" id="3_g7if2"]
 
 [sub_resource type="Gradient" id="Gradient_i5yc3"]
 interpolation_mode = 1
@@ -36,9 +37,10 @@ func _randomize_pupils() -> void:
 		p.position = Vector2.RIGHT.rotated(2 * PI * randf()) * _rand_radius
 "
 
-[node name="Client" type="Node2D" unique_id=1047316955 node_paths=PackedStringArray("_request_bubble", "_body_part_nodes")]
+[node name="Client" type="Node2D" unique_id=1047316955 node_paths=PackedStringArray("_request_bubble", "_patience_bar", "_body_part_nodes")]
 script = ExtResource("1_ughtl")
 _request_bubble = NodePath("RequestBubble")
+_patience_bar = NodePath("PatienceBar")
 _body_part_nodes = {
 0: NodePath("Body/Head"),
 1: NodePath("Body/Torso"),
@@ -50,6 +52,11 @@ _body_part_nodes = {
 }
 
 [node name="RequestBubble" parent="." unique_id=704258933 instance=ExtResource("2_3xxwo")]
+visible = false
+
+[node name="PatienceBar" parent="." unique_id=2046210911 instance=ExtResource("3_g7if2")]
+self_modulate = Color(0.38871545, 0.73525274, 0.14978603, 1)
+value = 10.0
 
 [node name="Body" type="Node2D" parent="." unique_id=594290328]
 modulate = Color(0.5686275, 0.5568628, 0.4117647, 1)
@@ -106,7 +113,7 @@ texture = SubResource("GradientTexture2D_bhunq")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Eyes/Sprite2D" unique_id=1664551489]
 self_modulate = Color(0.008202022, 0.008202025, 0.008202025, 1)
-position = Vector2(-11.186956, -4.3418894)
+position = Vector2(1.927736, 11.844148)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("GradientTexture2D_bhunq")
 
@@ -117,6 +124,6 @@ texture = SubResource("GradientTexture2D_bhunq")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Eyes/Sprite2D2" unique_id=1633194851]
 self_modulate = Color(0.008202022, 0.008202025, 0.008202025, 1)
-position = Vector2(9.343864, 7.529422)
+position = Vector2(-11.854344, -1.8640063)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("GradientTexture2D_bhunq")

@@ -14,6 +14,8 @@ signal line_casted
 signal hooked
 signal good_catched
 signal bad_catched
+signal client_entered(client: Client)
+signal client_leaving(client: Client)
 signal night_started(night_id: int)
 signal night_ratio_changed(percent: float)
 signal night_finished(night_id: int)
@@ -30,10 +32,19 @@ signal night_finished(night_id: int)
 @onready var _cast_progress: TextureProgressBar = %CastProgress
 @onready var _igor: Igor = %Igor
 @onready var _hooked_part: PathFollow2D = %HookedPart
+@onready var _new_client_timer: Timer = %NewClientTimer
+@onready var _client_slots: Array[Node2D] = [
+	%ClientSlot1,
+	%ClientSlot2,
+	%ClientSlot3,
+]
+@onready var _client_spawn: Node2D = %ClientSpawn
 
 var _night: int = 1
 var _night_progress: float
 var _night_money: int
+var _active_config: StageConfig
+var _active_clients: Array[Client]
 
 var _money: int = 0
 
@@ -44,6 +55,7 @@ var _state := -1:
 	set = _on_enter_state
 
 func _ready() -> void:
+	assert(config.has(1)) # at least first night should exists
 	_night = 0
 	_fishing_minigame.reeled.connect(_on_fishing_minigame_reeled)
 	await get_tree().physics_frame
@@ -58,8 +70,16 @@ func _process(p_delta: float) -> void:
 		if _night_progress >= 1.0:
 			_state = STATE_AFTER_STORE_CLOSED
 			night_finished.emit()
-			# TODO: clients leave
-			# TODO: show day info
+		else:
+			for i: int in range(_active_clients.size() - 1, -1, -1):
+				var c: Client = _active_clients[i]
+				c.patience -= p_delta
+				if c.patience <= 0:
+					client_leaving.emit(c)
+					c.queue_leave()
+					c.slot = _client_spawn # move run to spawner pos
+					_active_clients.remove_at(i)
+					_update_client_slots()
 	match _state:
 		STATE_WAITING:
 			if Input.is_action_just_pressed(&"action"):
@@ -68,6 +88,10 @@ func _process(p_delta: float) -> void:
 			_cast_time += p_delta
 			if Input.is_action_just_released(&"action"):
 				_state = STATE_CAST_ANIM
+
+func _update_client_slots():
+	for i: int in _active_clients.size():
+		_active_clients[i].slot = _client_slots[i]
 
 #region SetGet
 func _set_cast_time(p_time: float) -> void:
@@ -83,8 +107,11 @@ func _on_enter_state(p_state: int) -> void:
 			_night += 1
 			_night_money = 0
 			_night_progress = 0.0
+			_active_config = config.get(_night, _active_config)
 			night_ratio_changed.emit(0)
 			night_started.emit(_night)
+			_new_client_timer.start()
+			_on_new_client_timer_timeout()
 			_on_enter_state(STATE_WAITING)
 		STATE_WAITING:
 			_cast_progress.hide()
@@ -103,6 +130,9 @@ func _on_enter_state(p_state: int) -> void:
 			_cast_progress.hide()
 			_fishing_minigame.set_state(FishingMinigame.STATE_HOOKED)
 			hooked.emit()
+		STATE_AFTER_STORE_CLOSED:
+			_new_client_timer.stop()
+			# TODO: show night results
 		STATE_DAY_PASSES:
 			_end_day_fade.color = Color.TRANSPARENT
 			_end_day_toaster.hide()
@@ -131,4 +161,23 @@ func _on_fishing_minigame_reeled() -> void:
 		_fishing_minigame.set_process(true)
 		_state = STATE_WAITING
 		_igor.end_fishing()
+
+func _on_new_client_timer_timeout() -> void:
+	if _active_clients.size() < _active_config.max_clients and _active_clients.size() < _client_slots.size():
+		if _active_clients.size() > 0 and randf() > 0.5:
+			return
+		var custom_scene: PackedScene = null if _active_config.client_scenes.is_empty() else _active_config.client_scenes.pick_random()
+		if custom_scene == null:
+			const FALLBACK_MONSTER = preload("uid://dgrxpiet1h5x0")
+			custom_scene = FALLBACK_MONSTER
+		var c: Node = custom_scene.instantiate()
+		assert(c is Client)
+		var client := c as Client
+		_client_spawn.add_child(client)
+		var patience: float = randf_range(_active_config.client_min_patience, _active_config.client_max_patience, )
+		var missing_parts_count: int = randi_range(1, _active_config.max_parts_per_client)
+		client.setup(patience, missing_parts_count)
+		_active_clients.append(client)
+		_update_client_slots()
+		client_entered.emit(client)
 #endregion SignalHandlers

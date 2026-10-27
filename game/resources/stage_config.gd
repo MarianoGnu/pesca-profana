@@ -6,3 +6,4 @@ extends Resource
 @export var pay_multiplier: float = 1.0
 @export var client_min_patience: float = 15
 @export var client_max_patience: float = 20
+@export var client_scenes: Array[PackedScene] = []
