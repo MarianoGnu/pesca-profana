@@ -36,6 +36,8 @@ point_count = 3
 
 [sub_resource type="Resource" id="Resource_f4op1"]
 script = ExtResource("2_3nvyc")
+client_min_patience = 30.0
+client_max_patience = 50.0
 metadata/_custom_type_script = "uid://dutb7y2vdtorw"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riqys"]
@@ -418,7 +420,7 @@ stream_3/stream = ExtResource("25_jie06")
 stream_4/stream = ExtResource("26_h5ifc")
 stream_5/stream = ExtResource("27_2mbeq")
 
-[node name="Stage" type="Control" unique_id=1507039804]
+[node name="Stage" type="Control" unique_id=1507039804 node_paths=PackedStringArray("_hook_type_panels")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -430,6 +432,15 @@ cast_curve = SubResource("Curve_f74kx")
 config = Dictionary[int, ExtResource("2_3nvyc")]({
 1: SubResource("Resource_f4op1")
 })
+_hook_type_panels = {
+0: NodePath("CastProgress/💀"),
+1: null,
+2: NodePath("CastProgress/🦾"),
+3: NodePath("CastProgress/🦾"),
+4: NodePath("CastProgress/👣"),
+5: NodePath("CastProgress/👣"),
+6: NodePath("CastProgress/👁")
+}
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=7663207]
 self_modulate = Color(2.8165433, 2.8165433, 2.8165433, 1)
@@ -599,7 +610,7 @@ fill_mode = 3
 texture_under = SubResource("GradientTexture2D_tgqly")
 texture_progress = SubResource("GradientTexture2D_riqys")
 
-[node name="ColorRect" type="Panel" parent="CastProgress" unique_id=1237613967]
+[node name="👁" type="Panel" parent="CastProgress" unique_id=1237613967]
 self_modulate = Color(0.82, 0.3116, 0.7691598, 0.49019608)
 layout_mode = 1
 anchors_preset = -1
@@ -612,7 +623,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="CastProgress/ColorRect" unique_id=1220955199]
+[node name="Label" type="Label" parent="CastProgress/👁" unique_id=1220955199]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -624,7 +635,7 @@ text = "👁"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect2" type="Panel" parent="CastProgress" unique_id=1413587834]
+[node name="👣" type="Panel" parent="CastProgress" unique_id=1413587834]
 self_modulate = Color(0.1656, 0.5676401, 0.69, 0.49019608)
 layout_mode = 1
 anchors_preset = -1
@@ -638,7 +649,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
 
-[node name="Label" type="Label" parent="CastProgress/ColorRect2" unique_id=1889220259]
+[node name="Label" type="Label" parent="CastProgress/👣" unique_id=1889220259]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -650,7 +661,7 @@ text = "👣"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect3" type="Panel" parent="CastProgress" unique_id=1924082938]
+[node name="🦾" type="Panel" parent="CastProgress" unique_id=1924082938]
 self_modulate = Color(0.31820002, 0.37443995, 0.74, 0.49019608)
 layout_mode = 1
 anchors_preset = -1
@@ -665,7 +676,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="CastProgress/ColorRect3" unique_id=1952499476]
+[node name="Label" type="Label" parent="CastProgress/🦾" unique_id=1952499476]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -676,7 +687,7 @@ text = "🦾"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect4" type="Panel" parent="CastProgress" unique_id=1529521569]
+[node name="💀" type="Panel" parent="CastProgress" unique_id=1529521569]
 self_modulate = Color(1, 0.01999998, 0.13433343, 0.49019608)
 layout_mode = 1
 anchors_preset = -1
@@ -690,7 +701,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bhunq")
 metadata/_edit_group_ = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="CastProgress/ColorRect4" unique_id=1928360212]
+[node name="Label" type="Label" parent="CastProgress/💀" unique_id=1928360212]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -851,7 +862,6 @@ script = ExtResource("28_f4op1")
 [connection signal="good_catched" from="." to="Path2D/HookedPart" method="hide"]
 [connection signal="good_catched" from="." to="GoodCatch" method="play"]
 [connection signal="hooked" from="." to="Path2D/HookedPart" method="show"]
-[connection signal="hooked" from="." to="Path2D/HookedPart" method="set_progress_ratio" binds= [0.0]]
 [connection signal="line_casted" from="." to="CastLine" method="play"]
 [connection signal="night_ratio_changed" from="." to="HUD/NightProgressBar" method="_on_stage_night_ratio_changed"]
 [connection signal="night_started" from="." to="HUD/Tutorial" method="_on_stage_night_started"]

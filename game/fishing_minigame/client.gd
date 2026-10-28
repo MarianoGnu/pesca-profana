@@ -40,6 +40,7 @@ var patience: float:
 	BodyPart.Type.LEG_R : null,
 	BodyPart.Type.EYES : null,
 }
+var _get_part_curve: Curve = preload("uid://drk3lld3sy5vn")
 
 var _has_part: Dictionary[BodyPart.Type, bool] = {
 	BodyPart.Type.HEAD  : true,
@@ -69,6 +70,30 @@ func setup(max_patience: float, missing_parts_count: int) -> void:
 		var type = removable.pop_back()
 		_set_has_part(type, false)
 
+func get_missing_part_types() -> Array[BodyPart.Type]:
+	var missing: Array[BodyPart.Type] = []
+	for type: BodyPart.Type in _has_part:
+		if _has_part[type] == false and _body_part_nodes.get(type) != null:
+			missing.append(type)
+	return missing
+
+func add_part_from_position(p_type: BodyPart.Type, p_from_position: Vector2) -> void:
+	assert(_has_part.get(p_type, false) == false)
+	var part_node: Node2D = _body_part_nodes.get(p_type)
+	assert(part_node != null)
+	var final_pos: Vector2 = part_node.global_position
+	_set_has_part(p_type, true)
+	
+	part_node.global_position = p_from_position
+	var tween_callback: Callable = func(p_percent: float):
+		part_node.global_position = p_from_position.lerp(final_pos, p_percent)
+		part_node.global_position.y -= _get_part_curve.sample_baked(p_percent)
+	var tw: Tween = create_tween()
+	tw.tween_method(tween_callback, 0.0, 1.0, 0.5)
+	await tw.finished
+	part_node.global_position = final_pos
+	patience += 1.0
+
 func _set_has_part(p_type: BodyPart.Type, p_has_part: bool) -> void:
 	_has_part[p_type] = p_has_part
 	if not is_node_ready(): await ready
@@ -93,7 +118,7 @@ func _set_slot(p_slot: Node2D):
 	slot = p_slot
 	var distance = global_position.distance_to(slot.global_position)
 	if is_zero_approx(distance): return
-	const MOVE_SPEED = 200.0
+	const MOVE_SPEED = 2000.0
 	var move_time: float = distance / MOVE_SPEED
 	var tw: Tween = create_tween()
 	tw.tween_property(self, ^"global_position", slot.global_position, move_time)

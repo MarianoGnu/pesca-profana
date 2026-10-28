@@ -25,6 +25,15 @@ signal night_finished(night_id: int)
 @export var config: Dictionary[int, StageConfig] = {
 	# nigth_id : config
 }
+@export var _hook_type_panels: Dictionary[BodyPart.Type, Control] = {
+	BodyPart.Type.HEAD : null,
+	BodyPart.Type.ARM_L : null,
+	BodyPart.Type.ARM_R : null,
+	BodyPart.Type.LEG_L : null,
+	BodyPart.Type.LEG_R : null,
+	BodyPart.Type.EYES : null,
+	BodyPart.Type.TORSO : null,
+}
 
 @onready var _end_day_fade: ColorRect = %EndDayFade
 @onready var _end_day_toaster: PanelContainer = %EndDayToaster
@@ -45,6 +54,8 @@ var _night_progress: float
 var _night_money: int
 var _active_config: StageConfig
 var _active_clients: Array[Client]
+
+var _hooked_type: BodyPart.Type
 
 var _money: int = 0
 
@@ -85,13 +96,35 @@ func _process(p_delta: float) -> void:
 			if Input.is_action_just_pressed(&"action"):
 				_state = STATE_CASTING
 		STATE_CASTING:
-			_cast_time += p_delta
+			_cast_time += p_delta / 2.0
 			if Input.is_action_just_released(&"action"):
 				_state = STATE_CAST_ANIM
 
 func _update_client_slots():
 	for i: int in _active_clients.size():
 		_active_clients[i].slot = _client_slots[i]
+
+func _calculate_hooked_part(cast_value: float) -> BodyPart.Type:
+	# Collect possible types
+	var pullable: Dictionary[BodyPart.Type, bool]
+	for type: BodyPart.Type in _hook_type_panels.keys():
+		var panel: Control = _hook_type_panels.get(type, null)
+		if panel == null:
+			continue
+		var range_min: float = 1.0 - panel.anchor_bottom
+		var range_max: float = 1.0 - panel.anchor_top
+		if cast_value >= range_min and cast_value <= range_max:
+			pullable[type] = true
+	if randf() > 0.7:
+		# Lucky catch, will be something a client needs
+		var needed_and_owned: Dictionary[BodyPart.Type, bool]
+		for client: Client in _active_clients:
+			for type: BodyPart.Type in client.get_missing_part_types():
+				if pullable.has(type):
+					needed_and_owned[type] = true
+		if needed_and_owned.size() > 0:
+			return needed_and_owned.keys().pick_random()
+	return pullable.keys().pick_random()
 
 #region SetGet
 func _set_cast_time(p_time: float) -> void:
@@ -129,7 +162,9 @@ func _on_enter_state(p_state: int) -> void:
 		STATE_FISHING:
 			_cast_progress.hide()
 			_fishing_minigame.set_state(FishingMinigame.STATE_HOOKED)
+			_hooked_type = _calculate_hooked_part(_cast_progress.value)
 			hooked.emit()
+			_hooked_part.progress_ratio = remap(_cast_progress.value, 0.0, 1.0, 1.0, 0.3)
 		STATE_AFTER_STORE_CLOSED:
 			_new_client_timer.stop()
 			# TODO: show night results
@@ -156,8 +191,29 @@ func _on_fishing_minigame_reeled() -> void:
 	await tw.finished
 	if _hooked_part.progress_ratio >= 1.0:
 		_fishing_minigame.set_process(false)
-		good_catched.emit()
+		_active_clients.sort_custom(func(c1: Client, c2: Client) -> bool:
+			return c1.patience < c2.patience
+		)
+		
+		var collector_client: Client = null
+		var will_leave: bool = false
+		for client: Client in _active_clients:
+			if _hooked_type in client.get_missing_part_types():
+				client.add_part_from_position(_hooked_type, _hooked_part.global_position)
+				good_catched.emit()
+				will_leave = client.get_missing_part_types().is_empty()
+				if will_leave:
+					_active_clients.erase(client)
+				collector_client = client
+				break
+		if collector_client == null:
+			bad_catched.emit()
 		await get_tree().create_timer(0.5).timeout
+		if collector_client != null and will_leave:
+			client_leaving.emit(collector_client)
+			collector_client.queue_leave()
+			collector_client.slot = _client_spawn # move run to spawner pos
+			_update_client_slots()
 		_fishing_minigame.set_process(true)
 		_state = STATE_WAITING
 		_igor.end_fishing()

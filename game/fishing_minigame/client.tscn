@@ -43,7 +43,7 @@ _request_bubble = NodePath("RequestBubble")
 _patience_bar = NodePath("PatienceBar")
 _body_part_nodes = {
 0: NodePath("Body/Head"),
-1: NodePath("Body/Torso"),
+1: null,
 2: NodePath("Body/LArm"),
 3: NodePath("Body/RArm"),
 4: NodePath("Body/LLeg"),
@@ -113,7 +113,7 @@ texture = SubResource("GradientTexture2D_bhunq")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Eyes/Sprite2D" unique_id=1664551489]
 self_modulate = Color(0.008202022, 0.008202025, 0.008202025, 1)
-position = Vector2(1.927736, 11.844148)
+position = Vector2(-3.6128554, 11.44322)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("GradientTexture2D_bhunq")
 
@@ -124,6 +124,6 @@ texture = SubResource("GradientTexture2D_bhunq")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Eyes/Sprite2D2" unique_id=1633194851]
 self_modulate = Color(0.008202022, 0.008202025, 0.008202025, 1)
-position = Vector2(-11.854344, -1.8640063)
+position = Vector2(0.01226897, 11.999993)
 scale = Vector2(0.5, 0.5)
 texture = SubResource("GradientTexture2D_bhunq")
