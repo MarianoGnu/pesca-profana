@@ -48,6 +48,7 @@ signal night_finished(night_id: int)
 	%ClientSlot3,
 ]
 @onready var _client_spawn: Node2D = %ClientSpawn
+@onready var _fail_pos: Marker2D = %FailPos
 
 var _night: int = 1
 var _night_progress: float
@@ -207,7 +208,7 @@ func _on_fishing_minigame_reeled() -> void:
 				collector_client = client
 				break
 		if collector_client == null:
-			bad_catched.emit()
+			_on_bad_catch()
 		await get_tree().create_timer(0.5).timeout
 		if collector_client != null and will_leave:
 			client_leaving.emit(collector_client)
@@ -217,6 +218,39 @@ func _on_fishing_minigame_reeled() -> void:
 		_fishing_minigame.set_process(true)
 		_state = STATE_WAITING
 		_igor.end_fishing()
+
+func _on_bad_catch() -> void:
+	bad_catched.emit()
+	var panel: Control = _hook_type_panels.get(_hooked_type)
+	if !panel: return
+	var l = Label.new()
+	add_child(l)
+	var r := ColorRect.new()
+	r.size = Vector2(5,5)
+	l.add_theme_font_size_override(&"font_size", 64)
+	l.text = panel.name
+	l.size = Vector2.ZERO
+	l.global_position = _hooked_part.global_position
+	l.offset_transform_enabled = true
+	l.offset_transform_position = -l.size / 2.0
+	var tw: Tween = l.create_tween()
+	if _hooked_type == BodyPart.Type.HEAD and randf() > 0.0:
+		# Easter egg
+		var window_center: Vector2 = (get_viewport() as Window).size / 2.0
+		var screen_center: Vector2 = window_center * get_viewport().canvas_transform
+		tw.tween_property(l, ^"global_position", screen_center, 0.8)
+		tw.parallel()
+		tw.tween_property(l, ^"rotation_degrees", 360 * 2, 1.5)
+		tw.parallel()
+		tw.tween_property(l, ^"offset_transform_scale", Vector2(10, 10), 1.5)
+		tw.parallel()
+		tw.tween_property(l, ^"modulate", Color(), 0.3).set_delay(1.0)
+		tw.tween_property(l, ^"modulate", Color(0,0,0,0), 0.2)
+	else:
+		tw.tween_property(l, ^"global_position", _fail_pos.global_position, 1.2)
+		tw.parallel()
+		tw.tween_property(l, ^"rotation_degrees", 500, 1.2)
+	tw.finished.connect(l.queue_free)
 
 func _on_new_client_timer_timeout() -> void:
 	if _active_clients.size() < _active_config.max_clients and _active_clients.size() < _client_slots.size():

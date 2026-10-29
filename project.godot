@@ -46,6 +46,10 @@ folder_colors={
 "res://systems/": "red"
 }
 
+[gui]
+
+theme/custom_font="uid://c12kfdj83q0qx"
+
 [input]
 
 ui_cancel={

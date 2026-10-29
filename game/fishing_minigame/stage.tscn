@@ -797,6 +797,10 @@ texture = SubResource("GradientTexture2D_o172d")
 unique_name_in_owner = true
 autostart = true
 
+[node name="FailPos" type="Marker2D" parent="." unique_id=711546673]
+unique_name_in_owner = true
+position = Vector2(-104, -48)
+
 [node name="ClientSlot1" type="Node2D" parent="." unique_id=603142463]
 unique_name_in_owner = true
 position = Vector2(903.99994, 504)
