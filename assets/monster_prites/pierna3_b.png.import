@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2onkxthojlgu"
-path="res://.godot/imported/bg_stage.png-ce3683fb93c128204ad1f7c54ce7afe0.ctex"
+uid="uid://b1tbkvx322vx7"
+path="res://.godot/imported/pierna3_b.png-708d7c88a843651ceedec779a824225c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/bg_stage.png"
-dest_files=["res://.godot/imported/bg_stage.png-ce3683fb93c128204ad1f7c54ce7afe0.ctex"]
+source_file="res://assets/monster_prites/pierna3_b.png"
+dest_files=["res://.godot/imported/pierna3_b.png-708d7c88a843651ceedec779a824225c.ctex"]
 
 [params]
 

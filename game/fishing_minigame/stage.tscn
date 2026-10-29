@@ -1,16 +1,17 @@
 [gd_scene format=3 uid="uid://m3vvg83p2sma"]
 
-[ext_resource type="Script" uid="uid://h58albkajyqf" path="res://game/fishing_minigame/igor.gd" id="1_eijj6"]
 [ext_resource type="Script" uid="uid://cdj2j4s0ruk6o" path="res://game/fishing_minigame/stage.gd" id="1_f74kx"]
 [ext_resource type="Script" uid="uid://dutb7y2vdtorw" path="res://game/resources/stage_config.gd" id="2_3nvyc"]
 [ext_resource type="Script" uid="uid://d0gloleltgt26" path="res://game/fishing_minigame/night_progress_bar.gd" id="2_rgeny"]
 [ext_resource type="Script" uid="uid://yc2kpj5nflc0" path="res://game/fishing_minigame/fishing_line.gd" id="3_0st1p"]
+[ext_resource type="Texture2D" uid="uid://hj1t6xhapn8k" path="res://assets/backgrounds/stage_background.png" id="3_3nvyc"]
 [ext_resource type="Script" uid="uid://ddnuthkbks3bj" path="res://game/fishing_minigame/tutorial.gd" id="3_m016g"]
 [ext_resource type="PackedScene" uid="uid://bbeqvpwpsfln7" path="res://game/fishing_minigame/fishing_minigame.tscn" id="3_tgqly"]
 [ext_resource type="Script" uid="uid://cs8kgb7gge2wq" path="res://systems/input_hint_label.gd" id="4_tpg2g"]
 [ext_resource type="AudioStream" uid="uid://cc43mm3yacrqq" path="res://assets/audio/music/game_theme.ogg" id="5_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://nn1hjyoga4lv" path="res://assets/audio/fx/fishing_noices/normal_line_1.wav" id="5_feoqn"]
 [ext_resource type="AudioStream" uid="uid://cvejsioh6fkxu" path="res://assets/audio/fx/fishing_noices/normal_line_2.wav" id="6_mddte"]
+[ext_resource type="PackedScene" uid="uid://courgws7aw3iw" path="res://game/fishing_minigame/igor.tscn" id="7_3nvyc"]
 [ext_resource type="AudioStream" uid="uid://dhco1pxggvxxe" path="res://assets/audio/fx/fishing_noices/normal_line_3.wav" id="7_a3oqo"]
 [ext_resource type="AudioStream" uid="uid://bcha3j6tvwsal" path="res://assets/audio/fx/fishing_noices/fast_line_1.wav" id="8_lwls3"]
 [ext_resource type="AudioStream" uid="uid://cfuhl24ipvoby" path="res://assets/audio/fx/fishing_noices/fast_line_2.wav" id="9_jugoj"]
@@ -21,7 +22,6 @@
 [ext_resource type="AudioStream" uid="uid://cxs5hh8opxkmt" path="res://assets/audio/fx/fishing_noices/splash_4.wav" id="14_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://dce1rfjppcdnp" path="res://assets/audio/fx/misc/fishing_right.wav" id="16_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://dpyppfwxwsy8w" path="res://assets/audio/fx/misc/fishing_wrong.wav" id="17_rgeny"]
-[ext_resource type="Texture2D" uid="uid://d2onkxthojlgu" path="res://assets/backgrounds/bg_stage.png" id="21_nyxl6"]
 [ext_resource type="AudioStream" uid="uid://bi4o1mc5k0rn5" path="res://assets/audio/fx/moster noises/monster_roar_1.wav" id="22_thvba"]
 [ext_resource type="AudioStream" uid="uid://brqy5f3jwfq02" path="res://assets/audio/fx/moster noises/monster_roar_2.wav" id="23_f4op1"]
 [ext_resource type="AudioStream" uid="uid://clk1l1vu28q1t" path="res://assets/audio/fx/moster noises/monster_roar_3.wav" id="24_3nvyc"]
@@ -91,279 +91,17 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Gradient" id="Gradient_i5yc3"]
-interpolation_mode = 1
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_bhunq"]
-gradient = SubResource("Gradient_i5yc3")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
-metadata/_snap_enabled = true
-
-[sub_resource type="Animation" id="Animation_i5yc3"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Caña:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Caña:points")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [PackedVector2Array(0, 0, 48, 112)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Caña:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_eijj6"]
-resource_name = "cast"
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Caña:points")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [PackedVector2Array(112, 0, 48, 112)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Caña:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_thptw"]
-resource_name = "idle"
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Caña:points")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [PackedVector2Array(0, 0, 48, 112)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Caña:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_tgqly"]
-resource_name = "pull"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Caña:points")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [PackedVector2Array(0, 0, 48, 112), PackedVector2Array(24, -8, 56, 104), PackedVector2Array(0, 0, 48, 112)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Caña:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_f74kx"]
-resource_name = "wait"
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Caña:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tgqly"]
-_data = {
-&"RESET": SubResource("Animation_i5yc3"),
-&"cast": SubResource("Animation_eijj6"),
-&"idle": SubResource("Animation_thptw"),
-&"pull": SubResource("Animation_tgqly"),
-&"wait": SubResource("Animation_f74kx")
-}
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_88o1f"]
-animation = &"cast"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3egcj"]
-animation = &"idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_feoqn"]
-animation = &"pull"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mddte"]
-animation = &"wait"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a3oqo"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lwls3"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jugoj"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_djw4x"]
-advance_condition = &"pull"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_81trd"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_f74kx"]
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_bhunq"]
-reset_ends = true
-states/End/position = Vector2(963, 114)
-states/Start/position = Vector2(374, 114)
-states/cast/node = SubResource("AnimationNodeAnimation_88o1f")
-states/cast/position = Vector2(500, 195)
-states/idle/node = SubResource("AnimationNodeAnimation_3egcj")
-states/idle/position = Vector2(615, 195)
-states/pull/node = SubResource("AnimationNodeAnimation_feoqn")
-states/pull/position = Vector2(615, 273)
-states/wait/node = SubResource("AnimationNodeAnimation_mddte")
-states/wait/position = Vector2(500, 114)
-transitions = ["Start", "wait", SubResource("AnimationNodeStateMachineTransition_a3oqo"), "wait", "cast", SubResource("AnimationNodeStateMachineTransition_lwls3"), "cast", "idle", SubResource("AnimationNodeStateMachineTransition_jugoj"), "idle", "pull", SubResource("AnimationNodeStateMachineTransition_djw4x"), "pull", "idle", SubResource("AnimationNodeStateMachineTransition_81trd"), "idle", "wait", SubResource("AnimationNodeStateMachineTransition_f74kx")]
-graph_offset = Vector2(246, 82)
-
 [sub_resource type="Curve2D" id="Curve2D_6wvna"]
 _data = {
-"points": PackedVector2Array(28.6, -75.9, -28.6, 75.9, 592, 352, 0, 0, 0, 0, 72, 503.99994)
+"points": PackedVector2Array(28.6, -75.9, -28.6, 75.9, 448.11932, 336.11932, 0, 0, 0, 0, 104, 576.00006)
 }
 point_count = 2
 
 [sub_resource type="Curve2D" id="Curve2D_o172d"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 584, 16.000122, 33.296917, 0, -33.296917, 0, 504, -23.999878, 33.997902, 2.102963, -33.997902, -2.102963, 407.99997, -7.999939, 23.833582, 2.803953, -23.833582, -2.803953, 359.99997, -47.99994, 39.605804, 4.2059293, -39.605804, -4.2059293, 255.99997, -15.999939, 0, 0, 0, 0, 168, -39.99994)
+"points": PackedVector2Array(0, 0, 0, 0, 584, 16.000122, 33.296917, 0, -33.296917, 0, 504, -23.999878, 33.997902, 2.102963, -33.997902, -2.102963, 407.99997, -7.999939, 23.833582, 2.803953, -23.833582, -2.803953, 327.99997, -39.99994)
 }
-point_count = 6
+point_count = 4
 
 [sub_resource type="Shader" id="Shader_riqys"]
 code = "shader_type canvas_item;
@@ -384,6 +122,10 @@ shader = SubResource("Shader_riqys")
 shader_parameter/wave_force = 0.70000001043084
 shader_parameter/waveness = 11.0
 shader_parameter/speed = 4.80000007152576
+
+[sub_resource type="Gradient" id="Gradient_i5yc3"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 0.4862745, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_o172d"]
 gradient = SubResource("Gradient_i5yc3")
@@ -442,19 +184,21 @@ _hook_type_panels = {
 6: NodePath("CastProgress/👁")
 }
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=7663207]
+[node name="Background" type="TextureRect" parent="." unique_id=7663207]
 self_modulate = Color(2.8165433, 2.8165433, 2.8165433, 1)
+z_index = -2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("21_nyxl6")
+texture = ExtResource("3_3nvyc")
 expand_mode = 2
 stretch_mode = 6
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1740022086]
+visible = false
 
 [node name="NightProgressBar" type="ProgressBar" parent="HUD" unique_id=250774093]
 unique_name_in_owner = true
@@ -583,20 +327,6 @@ shortcut_in_tooltip = false
 text = "Press {action} to continue"
 script = ExtResource("4_tpg2g")
 
-[node name="Mesa" type="Polygon2D" parent="." unique_id=1507726799]
-position = Vector2(728, 408)
-color = Color(0.15555057, 0.56062984, 0.21243551, 1)
-polygon = PackedVector2Array(-23.364788, -103.473946, 24.635212, -103.473946, 24.635212, 184.52606, -23.364788, 184.52606)
-
-[node name="Label" type="Label" parent="Mesa" unique_id=1137691809]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "M
-E
-S
-A
-"
-
 [node name="CastProgress" type="TextureProgressBar" parent="." unique_id=1773966967]
 unique_name_in_owner = true
 layout_mode = 0
@@ -712,65 +442,23 @@ text = "💀"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Igor" type="Node2D" parent="." unique_id=101670147]
+[node name="Igor" parent="." unique_id=1020966387 instance=ExtResource("7_3nvyc")]
 unique_name_in_owner = true
-process_mode = 3
 position = Vector2(656, 504)
-script = ExtResource("1_eijj6")
-
-[node name="Cuerpo" type="Sprite2D" parent="Igor" unique_id=1589526275]
-self_modulate = Color(0.54510003, 0.79, 0.58591664, 1)
-clip_children = 2
-position = Vector2(0, -32)
-scale = Vector2(0.75, 1)
-texture = SubResource("GradientTexture2D_bhunq")
-
-[node name="Pantalones" type="Polygon2D" parent="Igor/Cuerpo" unique_id=1635610837]
-color = Color(0.10233485, 0.39497507, 0.14376396, 1)
-polygon = PackedVector2Array(-42.666687, 8, 42.666687, 8, 42.666687, 40, -42.666687, 40)
-
-[node name="Cabeza" type="Sprite2D" parent="Igor" unique_id=956304964]
-self_modulate = Color(0.54510003, 0.79, 0.58591664, 1)
-clip_children = 2
-position = Vector2(0, -72)
-scale = Vector2(0.50000024, 0.5)
-texture = SubResource("GradientTexture2D_bhunq")
-
-[node name="Pelo" type="Polygon2D" parent="Igor/Cabeza" unique_id=612875196]
-position = Vector2(0, 80)
-scale = Vector2(1.4999993, 2)
-color = Color(0.25201756, 0.14505628, 0.020455906, 1)
-polygon = PackedVector2Array(-21.333313, -48, -10.666687, -48, 0, -40, 10.666687, -48, 21.333313, -40, 32, -64, -32, -64)
-
-[node name="Line2D" type="Line2D" parent="Igor/Cabeza" unique_id=535042434]
-points = PackedVector2Array(-16, 0, -48, 16)
-default_color = Color(0.2509804, 0.14117648, 0.019607844, 1)
-
-[node name="Caña" type="Line2D" parent="Igor" unique_id=1456731544]
-position = Vector2(-64, -152)
-points = PackedVector2Array(0, 0, 48, 112)
-default_color = Color(0.41363606, 0.19966188, 0.051181525, 1)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Igor" unique_id=1857707924]
-libraries/ = SubResource("AnimationLibrary_tgqly")
-next/cast = &"idle"
-
-[node name="AnimationTree" type="AnimationTree" parent="Igor" unique_id=1174008063]
-tree_root = SubResource("AnimationNodeStateMachine_bhunq")
-anim_player = NodePath("../AnimationPlayer")
-parameters/conditions/pull = false
+scale = Vector2(1, 1)
 
 [node name="FishingLine" type="Path2D" parent="." unique_id=2100251020 node_paths=PackedStringArray("_fishing_rod", "_hooked_part", "_fishing_line")]
 visible = false
 curve = SubResource("Curve2D_6wvna")
 script = ExtResource("3_0st1p")
-_fishing_rod = NodePath("../Igor/Caña")
+_fishing_rod = NodePath("../Igor/Avatar/Skeleton2D/hip2/arm/hand/Caña/CañaEnd")
 _hooked_part = NodePath("../Path2D/HookedPart")
 _fishing_line = NodePath("Line2D")
 
 [node name="Line2D" type="Line2D" parent="FishingLine" unique_id=252232074]
-points = PackedVector2Array(592, 352, 590.324, 355.55768, 587.992, 359.1139, 585.02576, 362.6669, 583.3115, 364.44168, 581.447, 366.21497, 579.4349, 367.98657, 577.2777, 369.75635, 574.9785, 371.524, 572.5398, 373.28928, 569.96436, 375.05203, 567.2549, 376.81204, 564.4141, 378.56903, 561.44495, 380.32285, 558.3499, 382.07324, 555.1317, 383.82, 551.7933, 385.5629, 548.3373, 387.3017, 544.7663, 389.03622, 541.08325, 390.76627, 537.29065, 392.49155, 533.3915, 394.2119, 529.3883, 395.92706, 525.2838, 397.63684, 521.081, 399.34103, 516.7822, 401.03943, 512.3905, 402.73172, 507.9085, 404.41782, 503.33887, 406.09738, 498.6844, 407.77032, 496.32617, 408.6042, 493.94778, 409.43628, 491.54956, 410.26663, 489.13177, 411.09515, 486.69485, 411.9218, 484.23914, 412.74667, 481.76486, 413.5696, 479.27252, 414.39063, 476.76236, 415.2097, 474.23477, 416.02676, 471.69, 416.84186, 469.12848, 417.6549, 466.5505, 418.46597, 463.95645, 419.2748, 461.34665, 420.08167, 458.72147, 420.88635, 456.08118, 421.68884, 453.42618, 422.4892, 450.75674, 423.28732, 448.0733, 424.0831, 445.37613, 424.8767, 442.6656, 425.668, 439.94208, 426.45694, 437.2058, 427.24353, 434.45724, 428.02777, 431.6967, 428.80954, 428.92447, 429.5889, 426.14093, 430.3658, 423.3464, 431.14023, 420.54123, 431.91208, 417.7258, 432.68146, 414.90042, 433.44824, 412.0654, 434.21237, 409.22113, 434.97394, 406.3679, 435.73282, 403.5061, 436.48898, 400.63608, 437.2425, 397.75812, 437.99323, 394.87265, 438.74124, 391.9799, 439.48645, 389.08026, 440.22882, 386.17413, 440.96832, 383.26178, 441.70502, 380.34357, 442.43875, 377.41986, 443.16956, 374.49094, 443.89743, 371.55725, 444.6223, 368.61902, 445.34418, 365.67664, 446.06305, 362.73044, 446.77878, 359.7808, 447.4915, 356.828, 448.20102, 353.87247, 448.90747, 350.91443, 449.6107, 347.9543, 450.3107, 344.9925, 451.0075, 342.0292, 451.70108, 339.06482, 452.39133, 336.0997, 453.0783, 333.1342, 453.76193, 330.1686, 454.44217, 327.2033, 455.11902, 324.2387, 455.79248, 321.27502, 456.46246, 318.31265, 457.12897, 315.35193, 457.792, 312.3932, 458.45148, 309.4368, 459.10745, 306.48306, 459.7598, 303.53232, 460.4085, 300.58496, 461.0536, 297.64136, 461.69507, 294.70172, 462.33276, 291.7665, 462.9668, 288.83597, 463.5971, 285.9105, 464.2236, 282.99048, 464.84625, 280.07617, 465.46515, 277.16797, 466.08017, 274.26617, 466.69128, 271.37115, 467.29852, 268.48328, 467.9018, 265.60278, 468.5011, 262.73013, 469.09644, 259.8656, 469.6877, 257.00952, 470.27496, 254.16232, 470.85815, 251.32422, 471.43726, 248.49564, 472.01215, 245.67693, 472.58298, 242.86835, 473.1496, 240.07031, 473.71198, 237.28313, 474.27014, 234.50722, 474.82404, 231.74278, 475.37363, 228.99023, 475.91888, 226.24994, 476.45984, 223.5222, 476.9964, 220.80739, 477.52856, 218.10583, 478.05627, 215.41786, 478.57956, 212.74382, 479.09833, 210.08408, 479.6126, 207.43892, 480.1223, 204.80873, 480.6275, 202.19383, 481.12808, 199.59462, 481.62402, 197.01135, 482.1153, 194.44441, 482.60193, 191.89415, 483.08386, 189.36087, 483.5611, 186.84499, 484.0335, 184.34676, 484.50116, 181.86655, 484.96405, 176.96162, 485.87518, 172.1329, 486.76675, 167.38315, 487.63855, 162.71504, 488.4903, 158.13136, 489.32184, 153.63481, 490.13293, 149.22812, 490.92337, 144.91403, 491.69293, 140.69528, 492.44138, 136.57457, 493.16852, 132.55466, 493.87408, 128.63826, 494.55792, 124.8281, 495.2198, 121.12692, 495.85944, 117.53745, 496.4767, 114.06242, 497.07135, 110.70455, 497.64313, 107.46658, 498.19183, 104.35123, 498.7173, 101.36124, 499.2192, 98.49934, 499.69742, 95.76825, 500.15167, 93.1707, 500.5818, 88.38718, 501.36865, 84.1706, 502.05627, 80.5428, 502.64288, 77.525635, 503.12677, 73.41053, 503.7793, 72, 503.99994)
+points = PackedVector2Array(448.11932, 336.11932, 446.57086, 339.7407, 444.61588, 343.48532, 442.2682, 347.3474, 439.54156, 351.32123, 438.0405, 353.34824, 436.4498, 355.401, 434.7713, 357.4788, 433.0067, 359.58093, 431.1577, 361.7067, 429.22604, 363.8553, 427.2134, 366.02606, 425.1216, 368.21832, 422.9523, 370.4312, 420.7072, 372.66415, 418.38803, 374.91638, 415.9966, 377.18713, 413.53455, 379.47574, 411.00357, 381.78143, 408.4055, 384.10352, 405.74194, 386.44128, 403.01474, 388.794, 400.2255, 391.16095, 397.376, 393.54138, 394.46802, 395.93463, 391.50317, 398.33994, 388.48328, 400.7566, 385.40994, 403.18387, 382.28503, 405.62097, 379.1102, 408.06732, 375.88718, 410.52216, 372.61765, 412.98468, 369.3034, 415.45422, 365.94617, 417.93008, 362.54755, 420.4115, 359.1094, 422.8978, 355.6334, 425.38818, 352.12125, 427.882, 348.5747, 430.37848, 344.99548, 432.87692, 341.3853, 435.37665, 337.74588, 437.87692, 334.07898, 440.37695, 330.38623, 442.87607, 326.66943, 445.37354, 322.93033, 447.86868, 319.1706, 450.36078, 315.39197, 452.849, 311.59616, 455.33273, 307.7849, 457.8112, 303.95993, 460.28372, 300.12296, 462.74957, 296.27573, 465.208, 292.41995, 467.6583, 288.55728, 470.09973, 284.68958, 472.53162, 280.81845, 474.9532, 276.9457, 477.36377, 273.07297, 479.7626, 269.20206, 482.149, 265.33466, 484.5222, 261.4725, 486.8815, 257.6173, 489.2262, 253.77077, 491.5555, 249.93466, 493.8688, 246.11067, 496.1653, 242.30054, 498.44434, 238.506, 500.7051, 234.72878, 502.94696, 230.97054, 505.1691, 227.23306, 507.37085, 223.51807, 509.55157, 219.82726, 511.7104, 216.16238, 513.8467, 212.52513, 515.95966, 208.91728, 518.0487, 205.34048, 520.11304, 201.79652, 522.15186, 198.28708, 524.16455, 194.81393, 526.1504, 191.37872, 528.10864, 187.98326, 530.0385, 184.62923, 531.9394, 181.31834, 533.81055, 178.05234, 535.6511, 174.83292, 537.4606, 171.66183, 539.23804, 168.54083, 540.98285, 165.47157, 542.69434, 162.45581, 544.37177, 159.49527, 546.0143, 156.59169, 547.62134, 153.74677, 549.19214, 150.96223, 550.72595, 148.23982, 552.22205, 145.58125, 553.67975, 142.98824, 555.0983, 140.46251, 556.47705, 138.00578, 557.8152, 135.6198, 559.11194, 133.30627, 560.36676, 131.06693, 561.5788, 128.90349, 562.74744, 124.8112, 564.9513, 121.04323, 566.97266, 117.61333, 568.8058, 114.53532, 570.4448, 111.82297, 571.88403, 107.550415, 574.13995, 104, 576.00006)
 width = 1.0
+default_color = Color(0.09411765, 0.12156863, 0.09411765, 1)
 
 [node name="Path2D" type="Path2D" parent="." unique_id=1866000110]
 position = Vector2(688, 560)
@@ -801,28 +489,28 @@ autostart = true
 unique_name_in_owner = true
 position = Vector2(-104, -48)
 
-[node name="ClientSlot1" type="Node2D" parent="." unique_id=603142463]
+[node name="ClientSlot1" type="Marker2D" parent="." unique_id=935636]
 unique_name_in_owner = true
-position = Vector2(903.99994, 504)
+position = Vector2(818, 514)
 
-[node name="ClientSlot2" type="Node2D" parent="." unique_id=1642648180]
+[node name="ClientSlot2" type="Marker2D" parent="." unique_id=376909635]
 unique_name_in_owner = true
-position = Vector2(1015.9999, 504)
+position = Vector2(962, 514)
 
-[node name="ClientSlot3" type="Node2D" parent="." unique_id=1228196070]
+[node name="ClientSlot3" type="Marker2D" parent="." unique_id=1442474036]
 unique_name_in_owner = true
-position = Vector2(1128, 504)
+position = Vector2(898, 602)
 
 [node name="ClientSpawn" type="Node2D" parent="." unique_id=1407665597]
 unique_name_in_owner = true
-position = Vector2(1344, 505)
+position = Vector2(832, 832)
 
 [node name="FishingMinigame" parent="." unique_id=1643019011 instance=ExtResource("3_tgqly")]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 48.0
+offset_left = 152.0
 offset_top = 24.0
-offset_right = -768.0
+offset_right = -664.0
 offset_bottom = -328.0
 speed_factor = 3.0
 
@@ -869,6 +557,7 @@ script = ExtResource("28_f4op1")
 [connection signal="line_casted" from="." to="CastLine" method="play"]
 [connection signal="night_ratio_changed" from="." to="HUD/NightProgressBar" method="_on_stage_night_ratio_changed"]
 [connection signal="night_started" from="." to="HUD/Tutorial" method="_on_stage_night_started"]
+[connection signal="ready" from="HUD" to="HUD" method="show"]
 [connection signal="pressed" from="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer/EndTutorialButton" to="HUD/Tutorial" method="_on_end_tutorial_button_pressed"]
 [connection signal="ready" from="Path2D/HookedPart" to="Path2D/HookedPart" method="hide"]
 [connection signal="timeout" from="Path2D/NewClientTimer" to="." method="_on_new_client_timer_timeout"]
@@ -877,3 +566,5 @@ script = ExtResource("28_f4op1")
 [connection signal="reel_miss" from="FishingMinigame" to="MonsterRoar" method="play_roar"]
 [connection signal="reeled" from="FishingMinigame" to="Igor" method="pull"]
 [connection signal="reeled" from="FishingMinigame" to="Pull" method="play"]
+
+[editable path="Igor"]

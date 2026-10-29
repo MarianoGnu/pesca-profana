@@ -1,7 +1,7 @@
 @tool
 extends Path2D
 
-@export var _fishing_rod: Line2D
+@export var _fishing_rod: Marker2D
 @export var _hooked_part: PathFollow2D
 @export var _fishing_line: Line2D
 
@@ -12,7 +12,7 @@ func _process(_delta: float) -> void:
 	visible = _fishing_rod.visible && _hooked_part.visible
 	if !visible: return
 	
-	var rod_pos: Vector2 = _fishing_rod.global_position + _fishing_rod.get_point_position(0)
+	var rod_pos: Vector2 = _fishing_rod.global_position
 	var rod_moved: bool = rod_pos != _last_rod_pos
 	var part_moved: bool = _hooked_part.global_position != _last_part_pos
 	
