@@ -25,6 +25,7 @@
 [ext_resource type="AudioStream" uid="uid://cxs5hh8opxkmt" path="res://assets/audio/fx/fishing_noices/splash_4.wav" id="14_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://dce1rfjppcdnp" path="res://assets/audio/fx/misc/fishing_right.wav" id="16_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://dpyppfwxwsy8w" path="res://assets/audio/fx/misc/fishing_wrong.wav" id="17_rgeny"]
+[ext_resource type="AudioStream" uid="uid://dpn4bkepo2b8d" path="res://assets/audio/fx/misc/campana_puerta.wav" id="20_2rcph"]
 [ext_resource type="AudioStream" uid="uid://bi4o1mc5k0rn5" path="res://assets/audio/fx/moster noises/monster_roar_1.wav" id="22_thvba"]
 [ext_resource type="AudioStream" uid="uid://brqy5f3jwfq02" path="res://assets/audio/fx/moster noises/monster_roar_2.wav" id="23_f4op1"]
 [ext_resource type="AudioStream" uid="uid://clk1l1vu28q1t" path="res://assets/audio/fx/moster noises/monster_roar_3.wav" id="24_3nvyc"]
@@ -201,7 +202,6 @@ expand_mode = 2
 stretch_mode = 6
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1740022086]
-visible = false
 
 [node name="NightProgressBar" type="ProgressBar" parent="HUD" unique_id=250774093]
 unique_name_in_owner = true
@@ -448,7 +448,6 @@ vertical_alignment = 1
 [node name="Igor" parent="." unique_id=1020966387 instance=ExtResource("7_3nvyc")]
 unique_name_in_owner = true
 position = Vector2(656, 504)
-scale = Vector2(1, 1)
 
 [node name="FishingLine" type="Path2D" parent="." unique_id=2100251020 node_paths=PackedStringArray("_fishing_rod", "_hooked_part", "_fishing_line")]
 visible = false
@@ -486,6 +485,7 @@ texture = SubResource("GradientTexture2D_o172d")
 
 [node name="NewClientTimer" type="Timer" parent="Path2D" unique_id=836265551]
 unique_name_in_owner = true
+wait_time = 3.0
 autostart = true
 
 [node name="FailPos" type="Marker2D" parent="." unique_id=711546673]
@@ -504,9 +504,13 @@ position = Vector2(962, 514)
 unique_name_in_owner = true
 position = Vector2(898, 602)
 
-[node name="ClientSpawn" type="Node2D" parent="." unique_id=1407665597]
+[node name="ClientSpawn" type="Marker2D" parent="." unique_id=1945778508]
 unique_name_in_owner = true
-position = Vector2(832, 832)
+position = Vector2(1216, 888)
+
+[node name="ClientQuit" type="Marker2D" parent="." unique_id=1681889167]
+unique_name_in_owner = true
+position = Vector2(704, 904)
 
 [node name="FishingMinigame" parent="." unique_id=1643019011 instance=ExtResource("3_tgqly")]
 unique_name_in_owner = true
@@ -535,6 +539,10 @@ stream = SubResource("AudioStreamRandomizer_81trd")
 process_mode = 3
 stream = SubResource("AudioStreamRandomizer_81trd")
 
+[node name="Doorbell" type="AudioStreamPlayer" parent="." unique_id=679962319]
+process_mode = 3
+stream = ExtResource("20_2rcph")
+
 [node name="Splash" type="AudioStreamPlayer" parent="." unique_id=519020923]
 process_mode = 3
 stream = SubResource("AudioStreamRandomizer_rgeny")
@@ -554,6 +562,7 @@ script = ExtResource("28_f4op1")
 
 [connection signal="bad_catched" from="." to="Path2D/HookedPart" method="hide"]
 [connection signal="bad_catched" from="." to="BadCatch" method="play"]
+[connection signal="client_entered" from="." to="Doorbell" method="play" unbinds=1]
 [connection signal="good_catched" from="." to="Path2D/HookedPart" method="hide"]
 [connection signal="good_catched" from="." to="GoodCatch" method="play"]
 [connection signal="hooked" from="." to="Path2D/HookedPart" method="show"]

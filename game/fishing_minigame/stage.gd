@@ -48,6 +48,7 @@ signal night_finished(night_id: int)
 	%ClientSlot3,
 ]
 @onready var _client_spawn: Node2D = %ClientSpawn
+@onready var _client_quit: Node2D = %ClientQuit
 @onready var _fail_pos: Marker2D = %FailPos
 
 var _night: int = 1
@@ -89,7 +90,7 @@ func _process(p_delta: float) -> void:
 				if c.patience <= 0:
 					client_leaving.emit(c)
 					c.queue_leave()
-					c.slot = _client_spawn # move run to spawner pos
+					c.slot = _client_quit
 					_active_clients.remove_at(i)
 					_update_client_slots()
 	match _state:
@@ -213,7 +214,7 @@ func _on_fishing_minigame_reeled() -> void:
 		if collector_client != null and will_leave:
 			client_leaving.emit(collector_client)
 			collector_client.queue_leave()
-			collector_client.slot = _client_spawn # move run to spawner pos
+			collector_client.slot = _client_quit
 			_update_client_slots()
 		_fishing_minigame.set_process(true)
 		_state = STATE_WAITING

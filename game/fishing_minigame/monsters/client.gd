@@ -115,7 +115,7 @@ func _set_slot(p_slot: Node2D):
 	slot = p_slot
 	var distance = global_position.distance_to(slot.global_position)
 	if is_zero_approx(distance): return
-	const MOVE_SPEED = 2000.0
+	const MOVE_SPEED = 1000.0
 	var move_time: float = distance / MOVE_SPEED
 	var tw: Tween = create_tween()
 	tw.tween_property(self, ^"global_position", slot.global_position, move_time)
