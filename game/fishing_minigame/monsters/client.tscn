@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://dgrxpiet1h5x0"]
+
+[ext_resource type="Script" uid="uid://x7wm0jhidwrd" path="res://game/fishing_minigame/monsters/client.gd" id="1_xh7m0"]
+[ext_resource type="PackedScene" uid="uid://cb0sgd18w5jpr" path="res://game/fishing_minigame/request_bubble.tscn" id="2_ye1tv"]
+[ext_resource type="PackedScene" uid="uid://bk6aatn83emy5" path="res://game/fishing_minigame/patience_bar.tscn" id="3_vtjgv"]
+[ext_resource type="Texture2D" uid="uid://jiu2v2vm5gwx" path="res://assets/monster_prites/pierna.png" id="5_0b7qn"]
+[ext_resource type="Texture2D" uid="uid://ckmn7a14ie63e" path="res://assets/monster_prites/brazo_i1.png" id="6_arsta"]
+[ext_resource type="Texture2D" uid="uid://cwfkscdh2mj4i" path="res://assets/monster_prites/brazo_d1.png" id="7_eto81"]
+[ext_resource type="Texture2D" uid="uid://d4i6c8pt3ceon" path="res://assets/monster_prites/cabeza 1.png" id="8_f1phx"]
+[ext_resource type="Texture2D" uid="uid://dk7nko8ekg64k" path="res://assets/monster_prites/ojos1.png" id="9_dom4f"]
+
+[sub_resource type="Gradient" id="Gradient_i5yc3"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bhunq"]
+gradient = SubResource("Gradient_i5yc3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[node name="Client" type="Node2D" unique_id=1047316955 node_paths=PackedStringArray("_request_bubble", "_patience_bar", "_body_part_nodes")]
+script = ExtResource("1_xh7m0")
+_request_bubble = NodePath("RequestBubble")
+_patience_bar = NodePath("PatienceBar")
+_body_part_nodes = {
+0: NodePath("Body/Head"),
+1: null,
+2: NodePath("Body/LArm"),
+3: NodePath("Body/RArm"),
+4: NodePath("Body/LLeg"),
+5: NodePath("Body/RLeg"),
+6: NodePath("Body/Ojos1")
+}
+
+[node name="RequestBubble" parent="." unique_id=704258933 instance=ExtResource("2_ye1tv")]
+offset_top = -152.0
+offset_bottom = -152.0
+
+[node name="PatienceBar" parent="." unique_id=2046210911 instance=ExtResource("3_vtjgv")]
+self_modulate = Color(0.38871545, 0.73525274, 0.14978603, 1)
+offset_top = -142.0
+offset_bottom = -136.0
+value = 10.0
+
+[node name="Body" type="Node2D" parent="." unique_id=594290328]
+modulate = Color(0.5686275, 0.5568628, 0.4117647, 1)
+scale = Vector2(0.1, 0.1)
+
+[node name="Torso" type="Sprite2D" parent="Body" unique_id=586505432]
+clip_children = 2
+position = Vector2(0, -290)
+scale = Vector2(10, 28.125)
+texture = SubResource("GradientTexture2D_bhunq")
+
+[node name="Pantalones" type="Polygon2D" parent="Body/Torso" unique_id=1011261201]
+color = Color(0.39, 0.39, 0.39, 1)
+polygon = PackedVector2Array(-32.000046, 7.111111, 32.000046, 7.111111, 18.28574, 32, -18.28574, 32)
+
+[node name="LLeg" type="Sprite2D" parent="Body" unique_id=845123993]
+unique_name_in_owner = true
+position = Vector2(-140, 350)
+scale = Vector2(-1, 1)
+texture = ExtResource("5_0b7qn")
+offset = Vector2(49.999992, 399.99997)
+
+[node name="RLeg" type="Sprite2D" parent="Body" unique_id=1982417405]
+unique_name_in_owner = true
+position = Vector2(180, 370)
+texture = ExtResource("5_0b7qn")
+offset = Vector2(50.000015, 379.99997)
+
+[node name="LArm" type="Sprite2D" parent="Body" unique_id=1530566607]
+unique_name_in_owner = true
+position = Vector2(-399.99997, -639.99994)
+texture = ExtResource("6_arsta")
+offset = Vector2(-29.999996, 299.99997)
+
+[node name="RArm" type="Sprite2D" parent="Body" unique_id=2041094699]
+unique_name_in_owner = true
+position = Vector2(349.99997, -659.99994)
+texture = ExtResource("7_eto81")
+offset = Vector2(60.538525, 345.16092)
+
+[node name="Head" type="Sprite2D" parent="Body" unique_id=892886166]
+unique_name_in_owner = true
+position = Vector2(0, -1189.9999)
+texture = ExtResource("8_f1phx")
+
+[node name="Ojos1" type="Sprite2D" parent="Body" unique_id=253848058]
+position = Vector2(0, -1240)
+texture = ExtResource("9_dom4f")

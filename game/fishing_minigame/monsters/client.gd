@@ -104,10 +104,7 @@ func _set_has_part(p_type: BodyPart.Type, p_has_part: bool) -> void:
 func _ready() -> void:
 	assert(_request_bubble != null)
 	assert(_patience_bar != null)
-	# TODO: Delete me when we have real assets
-	if Engine.is_editor_hint(): return
-	var color := Color.from_hsv(randf(), randf_range(0.3, 0.7), randf_range(0.5, 1.0))
-	$Body.modulate = color
+	pass
 
 func queue_leave() -> void:
 	_leaving = true

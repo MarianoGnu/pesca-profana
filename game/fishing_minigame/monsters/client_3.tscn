@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://dtym8ecb88s5i"]
+
+[ext_resource type="PackedScene" uid="uid://dgrxpiet1h5x0" path="res://game/fishing_minigame/monsters/client.tscn" id="1_y847s"]
+[ext_resource type="Texture2D" uid="uid://n512u5o2nso2" path="res://assets/monster_prites/pierna2_b.png" id="2_ytrub"]
+[ext_resource type="Texture2D" uid="uid://dpruqf5ey7xwb" path="res://assets/monster_prites/pierna2.png" id="3_y4stt"]
+[ext_resource type="Texture2D" uid="uid://b5vkxlwi0gci0" path="res://assets/monster_prites/brazo_d2.png" id="4_gjfw4"]
+[ext_resource type="Texture2D" uid="uid://b2b5tokccsjux" path="res://assets/monster_prites/brazo_i2.png" id="5_s770w"]
+[ext_resource type="Texture2D" uid="uid://bq210vim35h6y" path="res://assets/monster_prites/cabeza3.png" id="6_hkf4f"]
+
+[node name="Client" unique_id=1047316955 node_paths=PackedStringArray("_body_part_nodes") instance=ExtResource("1_y847s")]
+_body_part_nodes = {
+0: NodePath("Body/Head"),
+1: null,
+2: NodePath("Body/LArm"),
+3: NodePath("Body/RArm"),
+4: NodePath("Body/LLeg"),
+5: NodePath("Body/RLeg"),
+6: NodePath("Body/Ojos1")
+}
+
+[node name="LLeg" parent="Body" parent_id_path=PackedInt32Array(594290328) index="1" unique_id=845123993]
+position = Vector2(-250, -90)
+scale = Vector2(-2, 2)
+texture = ExtResource("2_ytrub")
+
+[node name="RLeg" parent="Body" parent_id_path=PackedInt32Array(594290328) index="2" unique_id=1982417405]
+position = Vector2(130, -89.99997)
+scale = Vector2(2, 2)
+texture = ExtResource("3_y4stt")
+
+[node name="LArm" parent="Body" parent_id_path=PackedInt32Array(594290328) index="3" unique_id=1530566607]
+texture = ExtResource("4_gjfw4")
+
+[node name="RArm" parent="Body" parent_id_path=PackedInt32Array(594290328) index="4" unique_id=2041094699]
+texture = ExtResource("5_s770w")
+
+[node name="Head" parent="Body" parent_id_path=PackedInt32Array(594290328) index="5" unique_id=892886166]
+texture = ExtResource("6_hkf4f")
+
+[node name="Ojos1" parent="Body" parent_id_path=PackedInt32Array(594290328) index="6" unique_id=253848058]
+position = Vector2(-19.999998, -1270)
