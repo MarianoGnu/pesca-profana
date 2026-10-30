@@ -276,6 +276,9 @@ func _on_new_client_timer_timeout() -> void:
 		var missing_parts_count: int = randi_range(1, _active_config.max_parts_per_client)
 		client.setup(patience, missing_parts_count)
 		_active_clients.append(client)
+		client.paid.connect(func(p_money: int):
+			_money += p_money
+		)
 		_update_client_slots()
 		client_entered.emit(client)
 #endregion SignalHandlers
