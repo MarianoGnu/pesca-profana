@@ -79,6 +79,106 @@ pressed = true
 [sub_resource type="Shortcut" id="Shortcut_bhunq"]
 events = [SubResource("InputEventAction_riqys")]
 
+[sub_resource type="GDScript" id="GDScript_xnjnb"]
+script/source = "extends ColorRect
+
+var night_count: int = 7
+var money_goal: int = 9999
+
+@export_group(\"Fade\", \"_fade_\")
+@export var _fade_time: float = 0.5
+@export var _fade_alpha: float = 0.5
+
+@export_group(\"\")
+@export var _fill_sfx: AudioStreamPlayer
+
+@onready var _panel_container: PanelContainer = $PanelContainer
+@onready var _night_summary_label: Label = %NightSummaryLabel
+@onready var _total_money_progress_bar: ProgressBar = %TotalMoneyProgressBar
+@onready var _total_money_label: Label = %TotalMoneyLabel
+@onready var _end_summary_button: Button = %EndSummaryButton
+
+var _displayed_money: int = 0:
+	set = _set_displayed_money
+
+func _init() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	hide()
+
+func _ready() -> void:
+	await owner.ready
+	_total_money_progress_bar.max_value = money_goal
+	_total_money_progress_bar.value = 0
+	_total_money_label.text = \"0 / %d\" % money_goal
+
+#region SetGet
+func _set_displayed_money(p_money: int):
+	if !is_node_ready(): await ready
+	_displayed_money = p_money
+	_total_money_progress_bar.value = p_money
+	_total_money_label.text = \"%d / %d\" % [p_money, money_goal]
+#endregion SetGet
+
+#region SignalHandlers
+func _on_stage_night_finished(night_id: int, p_money: int) -> void:
+	var args: Dictionary = {
+		\"night_idx\" : night_id,
+		\"night_total\" : night_count,
+	}
+	_night_summary_label.text = tr(\"Night {night_idx} of {night_total}\").format(args)
+	_end_summary_button.disabled = true
+	color.a = 0
+	show()
+	_panel_container.hide()
+	get_tree().paused = true
+	var tw: Tween = create_tween()
+	tw.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tw.tween_property(self, ^\"color:a\", _fade_alpha, _fade_time)
+	await tw.finished
+	_panel_container.show()
+	tw.kill()
+	tw = create_tween()
+	tw.tween_property(self, ^\"_displayed_money\", p_money, 3.0).set_delay(1.0).set_ease(Tween.EASE_IN_OUT)
+	tw.parallel()
+	tw.tween_method(_play_sfx, 0, int((p_money - _displayed_money) / 100.0), 3.0).set_delay(1.0).set_ease(Tween.EASE_IN_OUT)
+	await tw.finished
+	_end_summary_button.disabled = false
+
+func _play_sfx(_ignore: int) -> void:
+	_fill_sfx.play()
+
+func _on_end_summary_button_pressed() -> void:
+	_panel_container.hide()
+	var tw = create_tween()
+	tw.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tw.tween_property(self, ^\"color:a\", 0, _fade_time)
+	await tw.finished
+	get_tree().paused = false
+	hide()
+#endregion SignalHandlers
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_xnjnb"]
+font_size = 30
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sn0t7"]
+bg_color = Color(0.14044744, 0.14044747, 0.14044738, 1)
+corner_radius_top_left = 90
+corner_radius_top_right = 90
+corner_radius_bottom_right = 90
+corner_radius_bottom_left = 90
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xnjnb"]
+bg_color = Color(0.2079125, 0.46938443, 0.18462384, 1)
+corner_radius_top_left = 90
+corner_radius_top_right = 90
+corner_radius_bottom_right = 90
+corner_radius_bottom_left = 90
+
 [sub_resource type="Gradient" id="Gradient_f74kx"]
 offsets = PackedFloat32Array(0)
 colors = PackedColorArray(0, 0, 0, 1)
@@ -399,6 +499,103 @@ shortcut_in_tooltip = false
 text = "Press {action} to continue"
 script = ExtResource("4_tpg2g")
 
+[node name="NightEndSummary" type="ColorRect" parent="HUD" unique_id=241323300 node_paths=PackedStringArray("_fill_sfx")]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+script = SubResource("GDScript_xnjnb")
+_fill_sfx = NodePath("../../BadCatch")
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD/NightEndSummary" unique_id=1702156766]
+self_modulate = Color(1.5561339, 1.5561339, 1.5561339, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.11100001
+anchor_top = 0.5
+anchor_right = 0.88900006
+anchor_bottom = 0.5
+offset_left = 25.12799
+offset_top = -81.0
+offset_right = -25.128052
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_sk7yl")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/NightEndSummary/PanelContainer" unique_id=1587168344]
+layout_mode = 2
+theme_override_constants/margin_left = 126
+theme_override_constants/margin_top = 61
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 82
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/NightEndSummary/PanelContainer/MarginContainer" unique_id=923038747]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="HUD/NightEndSummary/PanelContainer/MarginContainer/VBoxContainer" unique_id=911817618]
+custom_minimum_size = Vector2(0, 201.675)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/NightEndSummary/PanelContainer/MarginContainer/VBoxContainer/ColorRect" unique_id=1700344216]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_right = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/NightEndSummary/PanelContainer/MarginContainer/VBoxContainer/ColorRect/MarginContainer" unique_id=1768093750]
+layout_mode = 2
+
+[node name="NightSummaryLabel" type="Label" parent="HUD/NightEndSummary/PanelContainer/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer" unique_id=1408346557]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 6
+text = "Night {night_idx} of {night_total}"
+label_settings = SubResource("LabelSettings_xnjnb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TotalMoneyProgressBar" type="ProgressBar" parent="HUD/NightEndSummary/PanelContainer/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer" unique_id=1223978082]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 23.71)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_styles/background = SubResource("StyleBoxFlat_sn0t7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xnjnb")
+max_value = 9999.0
+value = 1180.0
+show_percentage = false
+
+[node name="TotalMoneyLabel" type="Label" parent="HUD/NightEndSummary/PanelContainer/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/TotalMoneyProgressBar" unique_id=424367167]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1180 / 9999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EndSummaryButton" type="Button" parent="HUD/NightEndSummary/PanelContainer/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer" unique_id=1349812076]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+shortcut = SubResource("Shortcut_bhunq")
+shortcut_in_tooltip = false
+text = "Press {action} to continue"
+script = ExtResource("4_tpg2g")
+
 [node name="CastProgress" type="TextureProgressBar" parent="." unique_id=1773966967]
 unique_name_in_owner = true
 layout_mode = 0
@@ -649,6 +846,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 0.0007230003
 
 [connection signal="bad_catched" from="." to="Path2D/HookedPart" method="hide"]
 [connection signal="bad_catched" from="." to="BadCatch" method="play"]
@@ -657,10 +855,12 @@ grow_vertical = 2
 [connection signal="good_catched" from="." to="GoodCatch" method="play"]
 [connection signal="hooked" from="." to="Path2D/HookedPart" method="show"]
 [connection signal="line_casted" from="." to="CastLine" method="play"]
+[connection signal="night_finished" from="." to="HUD/NightEndSummary" method="_on_stage_night_finished"]
 [connection signal="night_ratio_changed" from="." to="HUD/NightProgressBar" method="_on_stage_night_ratio_changed"]
 [connection signal="night_started" from="." to="HUD/Tutorial" method="_on_stage_night_started"]
 [connection signal="ready" from="HUD" to="HUD" method="show"]
 [connection signal="pressed" from="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer/EndTutorialButton" to="HUD/Tutorial" method="_on_end_tutorial_button_pressed"]
+[connection signal="pressed" from="HUD/NightEndSummary/PanelContainer/MarginContainer/VBoxContainer/ColorRect/MarginContainer/VBoxContainer/EndSummaryButton" to="HUD/NightEndSummary" method="_on_end_summary_button_pressed"]
 [connection signal="ready" from="Path2D/HookedPart" to="Path2D/HookedPart" method="hide"]
 [connection signal="timeout" from="Path2D/NewClientTimer" to="." method="_on_new_client_timer_timeout"]
 [connection signal="reel_miss" from="FishingMinigame" to="Igor" method="pull"]

@@ -18,9 +18,11 @@ signal client_entered(client: Client)
 signal client_leaving(client: Client)
 signal night_started(night_id: int)
 signal night_ratio_changed(percent: float)
-signal night_finished(night_id: int)
+signal night_finished(night_id: int, money: int)
 
 @export var cast_curve: Curve
+@export var money_goal: int = 9999
+@export var night_count: int = 7
 @export var night_duration_seconds: float = 120
 @export var config: Dictionary[int, StageConfig] = {
 	# nigth_id : config
@@ -77,7 +79,8 @@ func _ready() -> void:
 	_set_money(0)
 	await get_tree().physics_frame
 	_state = STATE_BEFORE_OPEN_STORE
-
+	%NightEndSummary.money_goal = money_goal
+	%NightEndSummary.night_count = night_count
 
 func _process(p_delta: float) -> void:
 	if not _state in [STATE_BEFORE_OPEN_STORE, STATE_AFTER_STORE_CLOSED]:
@@ -86,7 +89,6 @@ func _process(p_delta: float) -> void:
 		night_ratio_changed.emit(_night_progress)
 		if _night_progress >= 1.0:
 			_state = STATE_AFTER_STORE_CLOSED
-			night_finished.emit()
 		else:
 			for i: int in range(_active_clients.size() - 1, -1, -1):
 				var c: Client = _active_clients[i]
@@ -139,7 +141,7 @@ func _set_cast_time(p_time: float) -> void:
 		_cast_progress.value = cast_curve.sample_baked(_cast_time)
 
 func _set_money(p_money: int) -> void:
-	_money = p_money
+	_money = min(p_money, money_goal)
 	if !is_node_ready(): await ready
 	_money_label.text = "$ %d" % _money
 
@@ -155,6 +157,9 @@ func _on_enter_state(p_state: int) -> void:
 			night_started.emit(_night)
 			_new_client_timer.start()
 			_on_enter_state(STATE_WAITING)
+			set_process(true)
+			var tw = create_tween()
+			tw.tween_callback(_on_new_client_timer_timeout).set_delay(0.1)
 		STATE_WAITING:
 			_cast_progress.hide()
 			_fishing_minigame.set_state(FishingMinigame.STATE_UNSTARTED)
@@ -176,8 +181,12 @@ func _on_enter_state(p_state: int) -> void:
 			_hooked_part.progress_ratio = remap(_cast_progress.value, 0.0, 1.0, 1.0, 0.3)
 		STATE_AFTER_STORE_CLOSED:
 			_new_client_timer.stop()
-			# TODO: show night results
+			_fishing_minigame.set_state(FishingMinigame.STATE_UNSTARTED)
+			night_finished.emit(_night, _money)
+			await %NightEndSummary.visibility_changed
+			_on_enter_state(STATE_DAY_PASSES)
 		STATE_DAY_PASSES:
+			set_process(false)
 			_end_day_fade.color = Color.TRANSPARENT
 			_end_day_toaster.hide()
 			_end_day_fade.show()
