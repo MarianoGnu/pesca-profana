@@ -9,6 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://d4i6c8pt3ceon" path="res://assets/monster_prites/cabeza 1.png" id="8_f1phx"]
 [ext_resource type="Texture2D" uid="uid://dk7nko8ekg64k" path="res://assets/monster_prites/ojos1.png" id="9_dom4f"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_bhunq"]
+font_size = 27
+font_color = Color(0.18700004, 0.85, 0.22015001, 1)
+outline_size = 11
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="Gradient" id="Gradient_i5yc3"]
 interpolation_mode = 1
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -20,10 +26,12 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 metadata/_snap_enabled = true
 
-[node name="Client" type="Node2D" unique_id=1047316955 node_paths=PackedStringArray("_request_bubble", "_patience_bar", "_body_part_nodes")]
+[node name="Client" type="Node2D" unique_id=1047316955 node_paths=PackedStringArray("_request_bubble", "_patience_bar", "_money_label", "_money_timer", "_body_part_nodes")]
 script = ExtResource("1_xh7m0")
 _request_bubble = NodePath("RequestBubble")
 _patience_bar = NodePath("PatienceBar")
+_money_label = NodePath("PatienceBar/MoneyLabel")
+_money_timer = NodePath("PatienceBar/MoneyTimer")
 _body_part_nodes = {
 0: NodePath("Body/Head"),
 1: null,
@@ -43,6 +51,22 @@ self_modulate = Color(0.38871545, 0.73525274, 0.14978603, 1)
 offset_top = -142.0
 offset_bottom = -136.0
 value = 10.0
+
+[node name="MoneyLabel" type="Label" parent="PatienceBar" unique_id=67433642]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -19.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "$ 0"
+label_settings = SubResource("LabelSettings_bhunq")
+horizontal_alignment = 2
+
+[node name="MoneyTimer" type="Timer" parent="PatienceBar" unique_id=1885344018]
+wait_time = 0.5
 
 [node name="Body" type="Node2D" parent="." unique_id=594290328]
 modulate = Color(0.5686275, 0.5568628, 0.4117647, 1)

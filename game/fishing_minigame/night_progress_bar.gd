@@ -1,13 +1,9 @@
-extends ProgressBar
+extends TextureProgressBar
 
-@onready var label: Label = $Label
+
+@export var label: Label
 
 var _shown_time: float = -1
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
 
 #region SignalHandlers
 func _on_stage_night_ratio_changed(percent: float) -> void:

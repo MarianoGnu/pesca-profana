@@ -3,6 +3,11 @@
 [ext_resource type="Script" uid="uid://b48rr1tfi7r32" path="res://game/fishing_minigame/fishing_minigame.gd" id="1_66xu6"]
 [ext_resource type="Script" uid="uid://cs8kgb7gge2wq" path="res://systems/input_hint_label.gd" id="2_3kdh2"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_sk7yl"]
+font_size = 20
+outline_size = 13
+outline_color = Color(0, 0, 0, 1)
+
 [node name="FishingMinigame" type="Control" unique_id=1643019011]
 layout_mode = 3
 anchors_preset = 15
@@ -18,14 +23,17 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -11.5
-offset_bottom = 11.5
+offset_top = -59.00003
+offset_bottom = -35.00003
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.0084178, 1.7711258)
 alignment = 1
 
 [node name="StartLabel" type="Label" parent="Center" unique_id=1217220375]
 unique_name_in_owner = true
+self_modulate = Color(0.9416282, 0.26416638, 0, 1)
 layout_mode = 2
 text = "HOLD {action} TO CAST"
+label_settings = SubResource("LabelSettings_sk7yl")
 script = ExtResource("2_3kdh2")

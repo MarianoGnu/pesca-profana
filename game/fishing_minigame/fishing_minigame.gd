@@ -91,7 +91,7 @@ func _draw() -> void:
 	if _bg_color.a > 0:
 		draw_circle(center, draw_outer_radius, _bg_color, true)
 	
-	draw_circle(center, draw_outer_radius, draw_line_color, false, draw_line_width, true)
+	#draw_circle(center, draw_outer_radius, draw_line_color, false, draw_line_width, true)
 	_draw_marks()
 	
 	var position_line := (Vector2.RIGHT * draw_outer_radius).rotated(_position)

@@ -35,6 +35,7 @@ signal night_finished(night_id: int)
 	BodyPart.Type.TORSO : null,
 }
 
+@onready var _money_label: Label = %MoneyLabel
 @onready var _end_day_fade: ColorRect = %EndDayFade
 @onready var _end_day_toaster: PanelContainer = %EndDayToaster
 @onready var _fishing_minigame: FishingMinigame = %FishingMinigame
@@ -59,7 +60,8 @@ var _active_clients: Array[Client]
 
 var _hooked_type: BodyPart.Type
 
-var _money: int = 0
+var _money: int = 0:
+	set = _set_money
 
 var _cast_time: float = 0:
 	set = _set_cast_time
@@ -67,10 +69,12 @@ var _cast_time: float = 0:
 var _state := -1:
 	set = _on_enter_state
 
+
 func _ready() -> void:
 	assert(config.has(1)) # at least first night should exists
 	_night = 0
 	_fishing_minigame.reeled.connect(_on_fishing_minigame_reeled)
+	_set_money(0)
 	await get_tree().physics_frame
 	_state = STATE_BEFORE_OPEN_STORE
 
@@ -134,6 +138,10 @@ func _set_cast_time(p_time: float) -> void:
 	if !!_cast_progress and !!cast_curve:
 		_cast_progress.value = cast_curve.sample_baked(_cast_time)
 
+func _set_money(p_money: int) -> void:
+	_money = p_money
+	if !is_node_ready(): await ready
+	_money_label.text = "$ %d" % _money
 
 func _on_enter_state(p_state: int) -> void:
 	_state = p_state
@@ -146,7 +154,6 @@ func _on_enter_state(p_state: int) -> void:
 			night_ratio_changed.emit(0)
 			night_started.emit(_night)
 			_new_client_timer.start()
-			_on_new_client_timer_timeout()
 			_on_enter_state(STATE_WAITING)
 		STATE_WAITING:
 			_cast_progress.hide()

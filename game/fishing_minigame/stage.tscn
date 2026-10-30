@@ -13,12 +13,17 @@
 [ext_resource type="AudioStream" uid="uid://cc43mm3yacrqq" path="res://assets/audio/music/game_theme.ogg" id="5_4lvjx"]
 [ext_resource type="AudioStream" uid="uid://nn1hjyoga4lv" path="res://assets/audio/fx/fishing_noices/normal_line_1.wav" id="5_feoqn"]
 [ext_resource type="PackedScene" uid="uid://dtym8ecb88s5i" path="res://game/fishing_minigame/monsters/client_3.tscn" id="5_wymnx"]
+[ext_resource type="Shader" uid="uid://dgb4sil88eelv" path="res://game/fishing_minigame/displacement.gdshader" id="6_ljasc"]
 [ext_resource type="AudioStream" uid="uid://cvejsioh6fkxu" path="res://assets/audio/fx/fishing_noices/normal_line_2.wav" id="6_mddte"]
 [ext_resource type="PackedScene" uid="uid://courgws7aw3iw" path="res://game/fishing_minigame/igor.tscn" id="7_3nvyc"]
 [ext_resource type="AudioStream" uid="uid://dhco1pxggvxxe" path="res://assets/audio/fx/fishing_noices/normal_line_3.wav" id="7_a3oqo"]
+[ext_resource type="Texture2D" uid="uid://3clj4n0qpjtu" path="res://assets/backgrounds/cartel2.png" id="7_wymnx"]
+[ext_resource type="Texture2D" uid="uid://dvwxsnl8hma55" path="res://assets/backgrounds/acid_mask.png" id="7_xnjnb"]
 [ext_resource type="AudioStream" uid="uid://bcha3j6tvwsal" path="res://assets/audio/fx/fishing_noices/fast_line_1.wav" id="8_lwls3"]
+[ext_resource type="Texture2D" uid="uid://qkfdviah4bls" path="res://assets/backgrounds/stage_foreground.png" id="8_ulrso"]
 [ext_resource type="AudioStream" uid="uid://cfuhl24ipvoby" path="res://assets/audio/fx/fishing_noices/fast_line_2.wav" id="9_jugoj"]
 [ext_resource type="AudioStream" uid="uid://bpsv30jd0638w" path="res://assets/audio/fx/fishing_noices/fast_line_3.wav" id="10_djw4x"]
+[ext_resource type="Texture2D" uid="uid://g8wep7ocx0r0" path="res://assets/backgrounds/tutorial_panel.png" id="10_sk7yl"]
 [ext_resource type="AudioStream" uid="uid://dj6pt5q1bdtpo" path="res://assets/audio/fx/fishing_noices/splash_1.wav" id="11_o172d"]
 [ext_resource type="AudioStream" uid="uid://jnko0jsc1aa2" path="res://assets/audio/fx/fishing_noices/spash_2.wav" id="12_0st1p"]
 [ext_resource type="AudioStream" uid="uid://doh5w7cduvt18" path="res://assets/audio/fx/fishing_noices/splash_3.wav" id="13_6wvna"]
@@ -45,6 +50,12 @@ client_max_patience = 50.0
 client_scenes = Array[PackedScene]([ExtResource("3_2mbeq"), ExtResource("4_2rcph"), ExtResource("5_wymnx")])
 metadata/_custom_type_script = "uid://dutb7y2vdtorw"
 
+[sub_resource type="LabelSettings" id="LabelSettings_bhunq"]
+font_size = 12
+font_color = Color(0.21960784, 0.4, 0.13725491, 1)
+outline_size = 15
+outline_color = Color(1, 1, 0.7647059, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riqys"]
 bg_color = Color(0.5113334, 0, 0.59, 1)
 border_width_left = 8
@@ -55,6 +66,9 @@ corner_radius_top_left = 24
 corner_radius_top_right = 24
 corner_radius_bottom_right = 24
 corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sk7yl"]
+texture = ExtResource("10_sk7yl")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhunq"]
 
@@ -167,6 +181,18 @@ stream_3/stream = ExtResource("25_jie06")
 stream_4/stream = ExtResource("26_h5ifc")
 stream_5/stream = ExtResource("27_2mbeq")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6wd2h"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xnjnb"]
+noise = SubResource("FastNoiseLite_6wd2h")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6wd2h"]
+shader = ExtResource("6_ljasc")
+shader_parameter/mask = ExtResource("7_xnjnb")
+shader_parameter/displacement_texture = SubResource("NoiseTexture2D_xnjnb")
+shader_parameter/force = 0.00800000038
+
 [node name="Stage" type="Control" unique_id=1507039804 node_paths=PackedStringArray("_hook_type_panels")]
 layout_mode = 3
 anchors_preset = 15
@@ -190,6 +216,7 @@ _hook_type_panels = {
 }
 
 [node name="Background" type="TextureRect" parent="." unique_id=7663207]
+self_modulate = Color(2.3133948, 2.3133948, 2.3133948, 1)
 z_index = -2
 layout_mode = 1
 anchors_preset = 15
@@ -201,30 +228,67 @@ texture = ExtResource("3_3nvyc")
 expand_mode = 2
 stretch_mode = 6
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=1740022086]
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=812182267]
+position = Vector2(952, 304)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("7_wymnx")
 
-[node name="NightProgressBar" type="ProgressBar" parent="HUD" unique_id=250774093]
-unique_name_in_owner = true
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -27.0
-grow_horizontal = 2
-grow_vertical = 0
-max_value = 1.0
-step = 0.028
-value = 1.0
-show_percentage = false
-script = ExtResource("2_rgeny")
-
-[node name="Label" type="Label" parent="HUD/NightProgressBar" unique_id=1174462816]
+[node name="Foreground" type="TextureRect" parent="." unique_id=1725424671]
+self_modulate = Color(2.3133948, 2.3133948, 2.3133948, 0.627451)
+z_index = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("8_ulrso")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1740022086]
+
+[node name="NightProgressBar" type="TextureProgressBar" parent="HUD" unique_id=1734323736 node_paths=PackedStringArray("label")]
+unique_name_in_owner = true
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 712.0
+offset_top = -368.0
+offset_right = -384.0
+offset_bottom = -312.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 1.0
+step = 0.028
+value = 1.0
+script = ExtResource("2_rgeny")
+label = NodePath("VBoxContainer/TimeLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/NightProgressBar" unique_id=592230075]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_right = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="TimeLabel" type="Label" parent="HUD/NightProgressBar/VBoxContainer" unique_id=1174462816]
+layout_mode = 2
+text = "12:00 AM"
+label_settings = SubResource("LabelSettings_bhunq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoneyLabel" type="Label" parent="HUD/NightProgressBar/VBoxContainer" unique_id=1689731533]
+unique_name_in_owner = true
+layout_mode = 2
+text = "$700"
+label_settings = SubResource("LabelSettings_bhunq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -266,6 +330,7 @@ layout_mode = 2
 text = "NEXT NIGHT"
 
 [node name="Tutorial" type="ColorRect" parent="HUD" unique_id=1671514873]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -275,6 +340,7 @@ color = Color(0, 0, 0, 0)
 script = ExtResource("3_m016g")
 
 [node name="PanelContainer" type="PanelContainer" parent="HUD/Tutorial" unique_id=1591887424]
+self_modulate = Color(1.5561339, 1.5561339, 1.5561339, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.11100001
@@ -287,7 +353,7 @@ offset_right = -25.128052
 offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_riqys")
+theme_override_styles/panel = SubResource("StyleBoxTexture_sk7yl")
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD/Tutorial/PanelContainer" unique_id=1311930622]
 layout_mode = 2
@@ -314,7 +380,9 @@ current_tab = 0
 tabs_visible = false
 
 [node name="1" type="Label" parent="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer/TabContainer" unique_id=1968491210]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 23
 text = "TUTORIAL_NIGHT_1"
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -323,6 +391,7 @@ metadata/_custom_type_script = "uid://cs8kgb7gge2wq"
 metadata/_tab_index = 0
 
 [node name="EndTutorialButton" type="Button" parent="HUD/Tutorial/PanelContainer/MarginContainer/VBoxContainer" unique_id=786781364]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 shortcut = SubResource("Shortcut_bhunq")
@@ -515,11 +584,16 @@ position = Vector2(704, 904)
 [node name="FishingMinigame" parent="." unique_id=1643019011 instance=ExtResource("3_tgqly")]
 unique_name_in_owner = true
 layout_mode = 1
-offset_left = 152.0
-offset_top = 24.0
-offset_right = -664.0
-offset_bottom = -328.0
+offset_left = 8.0
+offset_top = 512.0
+offset_right = -808.0
+offset_bottom = 160.0
+rotation = -0.065662645
+scale = Vector2(1.7368752, 0.53071404)
 speed_factor = 3.0
+draw_line_color = Color(0.06469653, 0.06469653, 0.06469653, 1)
+draw_line_width = 5.0
+draw_mark_color = Color(1, 0.64000005, 0.100000024, 0.9411765)
 
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=684811271]
 process_mode = 3
@@ -530,35 +604,51 @@ bus = &"music"
 [node name="CastLine" type="AudioStreamPlayer" parent="." unique_id=116178430]
 process_mode = 3
 stream = SubResource("AudioStreamRandomizer_bhunq")
+bus = &"sfx"
 
 [node name="Pull" type="AudioStreamPlayer" parent="." unique_id=1601305304]
 process_mode = 3
 stream = SubResource("AudioStreamRandomizer_81trd")
+bus = &"sfx"
 
 [node name="Reel" type="AudioStreamPlayer" parent="." unique_id=616597581]
 process_mode = 3
 stream = SubResource("AudioStreamRandomizer_81trd")
+bus = &"sfx"
 
 [node name="Doorbell" type="AudioStreamPlayer" parent="." unique_id=679962319]
-process_mode = 3
 stream = ExtResource("20_2rcph")
+bus = &"sfx"
 
 [node name="Splash" type="AudioStreamPlayer" parent="." unique_id=519020923]
 process_mode = 3
 stream = SubResource("AudioStreamRandomizer_rgeny")
+bus = &"sfx"
 
 [node name="GoodCatch" type="AudioStreamPlayer" parent="." unique_id=80554876]
 process_mode = 3
 stream = ExtResource("16_4lvjx")
+bus = &"sfx"
 
 [node name="BadCatch" type="AudioStreamPlayer" parent="." unique_id=990486756]
 process_mode = 3
 stream = ExtResource("17_rgeny")
+bus = &"sfx"
 
 [node name="MonsterRoar" type="AudioStreamPlayer" parent="." unique_id=375206335]
 process_mode = 3
 stream = SubResource("AudioStreamRandomizer_riqys")
+bus = &"sfx"
 script = ExtResource("28_f4op1")
+
+[node name="PostProcess" type="ColorRect" parent="." unique_id=170193101]
+material = SubResource("ShaderMaterial_6wd2h")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="bad_catched" from="." to="Path2D/HookedPart" method="hide"]
 [connection signal="bad_catched" from="." to="BadCatch" method="play"]
